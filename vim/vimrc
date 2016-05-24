@@ -1,4 +1,8 @@
-let mapleader = "\<Space>"
+call plug#begin('~/.vim/plugged')
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-fugitive'
+call plug#end()
+
 filetype plugin on
 filetype plugin indent on 
 syntax on
@@ -18,9 +22,3 @@ colorscheme desert
 set nobackup
 set nowb
 set noswapfile
-
-
-call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-fugitive'
-call plug#end()
