@@ -17,8 +17,6 @@ set expandtab
 set ruler
 set ignorecase
 set smartcase
-set background=dark
-colorscheme desert
 set nobackup
 set nowb
 set noswapfile
