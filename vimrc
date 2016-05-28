@@ -1,8 +1,6 @@
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
 call plug#end()
 
 filetype plugin on
