@@ -1,26 +1,33 @@
-call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-fugitive'
-call plug#end()
-
-filetype plugin on
-filetype plugin indent on 
+" EDITOR SETTINGS
 syntax on
-set t_Co=256
-set background=dark
-colorscheme desert
-let g:jsx_ext_required = 0
-set hlsearch
-set incsearch
-set encoding=utf8
 set number
-set mouse=a
+set ruler
+set noswapfile
+set nobackup
+set colorcolumn=80
+set encoding=utf8
+set showmatch
+
+" LEADER KEY
+let mapleader=" "
+
+" FILE TYPES
+filetype on
+filetype plugin on
+filetype indent on
+
+" TEXT FORMATTING
 set shiftwidth=2
 set softtabstop=2
 set expandtab
-set ruler
-set ignorecase
 set smartcase
-set nobackup
-set nowb
-set noswapfile
+set nowrap
+set autoindent
+set smartindent
+
+" COLORS
+colorscheme desert
+
+" SEARCHING
+set hlsearch
+nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
