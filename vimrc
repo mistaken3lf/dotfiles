@@ -26,8 +26,7 @@ set autoindent
 set smartindent
 
 " COLORS
-colorscheme desert
+colorscheme 1989
 
 " SEARCHING
 set hlsearch
-nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
