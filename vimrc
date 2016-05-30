@@ -33,5 +33,5 @@ set hlsearch
 
 " PLUGINS 
 call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree'
 call plug#end()
