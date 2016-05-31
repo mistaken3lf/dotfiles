@@ -1,3 +1,8 @@
+" PLUGINS 
+call plug#begin('~/.vim/plugged')
+Plug 'scrooloose/nerdtree'
+call plug#end()
+
 " EDITOR SETTINGS
 syntax on
 set number
@@ -32,7 +37,6 @@ highlight ColorColumn ctermbg=0
 " SEARCHING
 set hlsearch
 
-" PLUGINS 
-call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree'
-call plug#end()
+" NERDTREE
+let NERDTreeShowHidden=1
+nmap <leader>n :NERDTreeToggle<CR>
