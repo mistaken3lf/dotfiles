@@ -10,5 +10,4 @@
 - Clone my dotfiles repo `git clone https://github.com/knipferrc/dotfiles.git`
 - Change directory into the dotfiles folder and copy my vimrc to yours: `cp vimrc ~/.vimrc`
 - Copy the .vim directory to your home directory: `cp -r .vim ~`
-
-
+- Open vim and then run `:PlugInstall` to install all plugins
