@@ -4,7 +4,6 @@ set number
 set ruler
 set noswapfile
 set nobackup
-set colorcolumn=80
 set encoding=utf8
 set showmatch
 
@@ -27,6 +26,8 @@ set smartindent
 
 " COLORS
 colorscheme 1989
+set colorcolumn=80
+highlight ColorColumn ctermbg=0
 
 " SEARCHING
 set hlsearch
