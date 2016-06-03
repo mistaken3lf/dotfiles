@@ -1,6 +1,9 @@
 " PLUGINS 
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-fugitive'
+Plug 'scrooloose/syntastic'
 call plug#end()
 
 " EDITOR SETTINGS
@@ -40,3 +43,6 @@ set hlsearch
 " NERDTREE
 let NERDTreeShowHidden=1
 nmap <leader>n :NERDTreeToggle<CR>
+
+" VIM AIRLINE
+set laststatus=2
