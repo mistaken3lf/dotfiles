@@ -6,6 +6,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/syntastic'
 call plug#end()
 
+" LEADER KEY
+let mapleader=" "
+
 " COLORS
 colorscheme 1989
 set colorcolumn=80
@@ -16,29 +19,28 @@ syntax enable
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
+set shiftround
 set expandtab
-set smartcase
 set nowrap
-set autoindent
 
 " UI CONFIG
+filetype plugin indent on
 set number
 set showcmd
 set cursorline
-filetype plugin indent on
 set wildmenu
 set ruler
 set noswapfile
 set nobackup
 set encoding=utf8
 set showmatch
-
-" LEADER KEY
-let mapleader=" "
+set history=50
 
 " SEARCHING
 set incsearch
 set hlsearch
+set smartcase
+set ignorecase
 
 " CODE FOLDING
 set foldenable
