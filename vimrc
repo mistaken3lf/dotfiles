@@ -4,24 +4,30 @@ Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-surround'
+Plug 'airblade/vim-gitgutter'
+Plug 'pangloss/vim-javascript'
 call plug#end()
 
 " LEADER KEY
 let mapleader=" "
 
 " COLORS
+syntax enable
+set background=dark
 colorscheme 1989
 set colorcolumn=80
 highlight ColorColumn ctermbg=0
 
 " TEXT FORMATTING
-syntax enable
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set shiftround
 set expandtab
 set nowrap
+set autoindent
 
 " UI CONFIG
 filetype plugin indent on
@@ -53,3 +59,16 @@ nmap <leader>n :NERDTreeToggle<CR>
 
 " VIM AIRLINE
 set laststatus=2
+
+" SYNTASTIC
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" VIM-JAVASCRIPT
+let g:javascript_enable_domhtmlcss = 1
