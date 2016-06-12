@@ -8,6 +8,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
 Plug 'pangloss/vim-javascript'
+Plug 'fatih/vim-go'
 call plug#end()
 
 " LEADER KEY
