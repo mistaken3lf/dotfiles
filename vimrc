@@ -17,7 +17,7 @@ let mapleader=" "
 " COLORS
 syntax enable
 set background=dark
-colorscheme monokai
+colorscheme dracula
 set colorcolumn=80
 highlight ColorColumn ctermbg=0
 
