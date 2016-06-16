@@ -74,3 +74,6 @@ let g:syntastic_check_on_wq = 0
 
 " VIM-JAVASCRIPT
 let g:javascript_enable_domhtmlcss = 1
+
+" VIM-JSX
+let g:jsx_ext_required = 0
