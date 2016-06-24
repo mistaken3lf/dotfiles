@@ -103,5 +103,4 @@ fi
 #    . /etc/bash_completion
 #fi
 
-export NVM_DIR="/Users/knipferrc/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+alias devbox="docker run --rm -it -v $PWD:/home -p 3000:3000 knipferrc/devbox"
