@@ -102,5 +102,3 @@ fi
 #if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 #    . /etc/bash_completion
 #fi
-
-alias devbox="docker run --rm -it -v $PWD:/home -p 3000:3000 knipferrc/devbox"
