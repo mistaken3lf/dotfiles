@@ -5,6 +5,13 @@ Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'itchyny/lightline.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'ap/vim-css-color'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
 " LEADER KEY
@@ -14,8 +21,6 @@ let mapleader=" "
 syntax enable
 set background=dark
 colorscheme gruvbox
-set colorcolumn=80
-highlight ColorColumn ctermbg=0
 
 " TEXT FORMATTING
 set tabstop=2
@@ -32,7 +37,6 @@ set number
 set showcmd
 set cursorline
 set wildmenu
-set ruler
 set noswapfile
 set nobackup
 set encoding=utf8
@@ -51,8 +55,24 @@ set foldlevelstart=10
 set foldnestmax=10
 
 " NERDTREE
+function! NERDStartup()
+  if !argc() && !exists("s:std_in")
+    exe NERDTree
+  end
+  if argc() && isdirectory(argv()[0]) && !exists("s:std_in")
+    exe 'NERDTree' argv()[0]
+    wincmd p
+    ene
+  end
+endfunction
+
 let NERDTreeShowHidden=1
-nmap <leader>n :NERDTreeToggle<CR>
+let NERDTreeWinPos = "left"
+map <C-n> :NERDTreeToggle<CR>
+autocmd StdinReadPre * let s:std_in=1
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * call NERDStartup()
 
 " RUST
 autocmd BufNewFile,BufRead *.rs set filetype=rust
