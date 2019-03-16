@@ -12,6 +12,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'ap/vim-css-color'
 Plug 'tpope/vim-fugitive'
+Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
 " LEADER KEY
@@ -55,24 +56,11 @@ set foldlevelstart=10
 set foldnestmax=10
 
 " NERDTREE
-function! NERDStartup()
-  if !argc() && !exists("s:std_in")
-    exe NERDTree
-  end
-  if argc() && isdirectory(argv()[0]) && !exists("s:std_in")
-    exe 'NERDTree' argv()[0]
-    wincmd p
-    ene
-  end
-endfunction
-
 let NERDTreeShowHidden=1
 let NERDTreeWinPos = "left"
 map <C-n> :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * call NERDStartup()
 
 " RUST
 autocmd BufNewFile,BufRead *.rs set filetype=rust
