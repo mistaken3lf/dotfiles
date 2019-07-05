@@ -12,7 +12,11 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'ap/vim-css-color'
 Plug 'tpope/vim-fugitive'
-Plug 'ryanoasis/vim-devicons'
+Plug 'tpope/vim-surround'
+Plug 'burner/vim-svelte'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " LEADER KEY
@@ -43,6 +47,9 @@ set nobackup
 set encoding=utf8
 set showmatch
 set history=50
+
+" MOUSE
+set nomousehide
 
 " SEARCHING
 set incsearch
