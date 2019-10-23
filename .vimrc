@@ -17,6 +17,7 @@ Plug 'burner/vim-svelte'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
+Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 call plug#end()
 
 " LEADER KEY
