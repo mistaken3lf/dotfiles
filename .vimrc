@@ -18,6 +18,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " LEADER KEY
