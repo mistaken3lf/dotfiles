@@ -29,6 +29,10 @@ syntax enable
 set background=dark
 colorscheme gruvbox
 
+if (has("termguicolors"))
+  set termguicolors
+endif
+
 " TEXT FORMATTING
 set tabstop=2
 set softtabstop=2
