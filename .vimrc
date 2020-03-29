@@ -1,7 +1,6 @@
 " PLUGINS
 call plug#begin()
 Plug 'morhetz/gruvbox'
-Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'itchyny/lightline.vim'
@@ -17,8 +16,9 @@ Plug 'burner/vim-svelte'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
-Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'scrooloose/syntastic'
+Plug 'zah/nim.vim'
 call plug#end()
 
 " LEADER KEY
@@ -71,5 +71,3 @@ map <C-n> :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" RUST
-autocmd BufNewFile,BufRead *.rs set filetype=rust
