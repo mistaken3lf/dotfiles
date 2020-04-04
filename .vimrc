@@ -12,13 +12,13 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'ap/vim-css-color'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'burner/vim-svelte'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'sheerun/vim-polyglot'
+Plug 'evanleck/vim-svelte'
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/syntastic'
-Plug 'zah/nim.vim'
 call plug#end()
 
 " LEADER KEY
@@ -70,4 +70,4 @@ let NERDTreeWinPos = "left"
 map <C-n> :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
+autocmd BufWinEnter * NERDTreeMirror
