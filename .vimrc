@@ -2,6 +2,7 @@
 call plug#begin()
 Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree'
+Plug 'rust-lang/rust.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'itchyny/lightline.vim'
 Plug 'airblade/vim-gitgutter'
