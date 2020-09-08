@@ -12,11 +12,11 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'ap/vim-css-color'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'sheerun/vim-polyglot'
 Plug 'evanleck/vim-svelte'
 Plug 'w0rp/ale'
 Plug 'scrooloose/syntastic'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 " LEADER KEY
