@@ -16,6 +16,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'evanleck/vim-svelte'
 Plug 'w0rp/ale'
 Plug 'scrooloose/syntastic'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 " LEADER KEY
