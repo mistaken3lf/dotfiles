@@ -1,6 +1,5 @@
 " PLUGINS
 call plug#begin()
-Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'itchyny/lightline.vim'
@@ -12,7 +11,6 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'ap/vim-css-color'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'sheerun/vim-polyglot'
 Plug 'evanleck/vim-svelte'
 Plug 'w0rp/ale'
@@ -25,7 +23,6 @@ let mapleader=" "
 " COLORS
 syntax enable
 set background=dark
-colorscheme gruvbox
 
 " TEXT FORMATTING
 set tabstop=2
