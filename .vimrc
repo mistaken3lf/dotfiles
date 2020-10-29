@@ -7,9 +7,7 @@ endif
 
 " PLUGINS
 call plug#begin()
-Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree'
-Plug 'rust-lang/rust.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'itchyny/lightline.vim'
 Plug 'airblade/vim-gitgutter'
@@ -22,10 +20,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'sheerun/vim-polyglot'
 Plug 'evanleck/vim-svelte'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/syntastic'
 call plug#end()
 
@@ -35,7 +30,6 @@ let mapleader=" "
 " COLORS
 syntax enable
 set background=dark
-colorscheme gruvbox
 
 " TEXT FORMATTING
 set tabstop=2
