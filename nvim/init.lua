@@ -1,4 +1,8 @@
--- Install packer
+local opt = vim.opt -- Set options (global/buffer/windows-scoped)
+
+-----------------------------------------------------------
+-- Install Packer
+-----------------------------------------------------------
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
@@ -8,7 +12,9 @@ end
 local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
 vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | PackerCompile', group = packer_group, pattern = 'init.lua' })
 
--- Plugins
+-----------------------------------------------------------
+-- Setup plugins
+-----------------------------------------------------------
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim' -- Package manager
   use 'tpope/vim-fugitive' -- Git commands in nvim
@@ -19,10 +25,7 @@ require('packer').startup(function(use)
   -- UI to select things (files, grep results, open buffers...)
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-
-  -- Everforest theme
   use 'sainnhe/everforest'
-
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
 
   -- Add indentation guides even on blank lines
@@ -46,44 +49,59 @@ require('packer').startup(function(use)
     requires = {
       'kyazdani42/nvim-web-devicons', -- optional, for file icon
     }
-}
+  }
 end)
 
---Open files on the right of tree
-vim.opt.splitright = true
 
---Set highlight on search
-vim.o.hlsearch = false
+-----------------------------------------------------------
+-- General
+-----------------------------------------------------------
+opt.mouse = 'a' -- Enable mouse support
+opt.clipboard = 'unnamedplus' -- Copy/paste to system clipboard
+opt.swapfile = false -- Don't use swapfile
+opt.completeopt = 'menuone,noselect' -- Autocomplete options
 
---Make line numbers default
-vim.wo.number = true
+-----------------------------------------------------------
+-- Neovim UI
+-----------------------------------------------------------
+opt.number = true -- Show line number
+opt.showmatch = true -- Highlight matching parenthesis
+opt.foldmethod = 'marker' -- Enable folding (default 'foldmarker')
+opt.colorcolumn = '80' -- Line lenght marker at 80 columns
+opt.splitright = true -- Vertical split to the right
+opt.splitbelow = true -- Horizontal split to the bottom
+opt.ignorecase = true -- Ignore case letters when search
+opt.smartcase = true -- Ignore lowercase for the whole pattern
+opt.linebreak = true -- Wrap on word boundary
+opt.termguicolors = true -- Enable 24-bit RGB colors
+opt.laststatus = 3 -- Set global statusline
 
---Enable mouse mode
-vim.o.mouse = 'a'
+-----------------------------------------------------------
+-- Tabs, indent
+-----------------------------------------------------------
+opt.expandtab = true -- Use spaces instead of tabs
+opt.shiftwidth = 4 -- Shift 4 spaces when tab
+opt.tabstop = 4 -- 1 tab == 4 spaces
+opt.smartindent = true -- Autoindent new lines
 
---Enable break indent
-vim.o.breakindent = true
+-----------------------------------------------------------
+-- Memory, CPU
+-----------------------------------------------------------
+opt.hidden = true -- Enable background buffers
+opt.history = 100 -- Remember N lines in history
+opt.lazyredraw = true -- Faster scrolling
+opt.synmaxcol = 240 -- Max column for syntax highlight
+opt.updatetime = 700 -- ms to wait for trigger an event
 
---Save undo history
-vim.opt.undofile = true
-
---Case insensitive searching UNLESS /C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
---Decrease update time
-vim.o.updatetime = 250
-vim.wo.signcolumn = 'yes'
-
---Set colorscheme
-vim.o.termguicolors = true
+-----------------------------------------------------------
+-- Set colorscheme
+-----------------------------------------------------------
 vim.cmd [[colorscheme everforest]]
 
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
-
--- NvimTree setup
-require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
+-----------------------------------------------------------
+-- NvimTree Settings
+-----------------------------------------------------------
+require 'nvim-tree'.setup {
   auto_reload_on_write = true,
   disable_netrw = false,
   hide_root_folder = false,
@@ -195,7 +213,9 @@ require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
   },
 }
 
---Set statusbar
+-----------------------------------------------------------
+-- Lualine Settings
+-----------------------------------------------------------
 require('lualine').setup {
   options = {
     icons_enabled = false,
@@ -205,10 +225,14 @@ require('lualine').setup {
   },
 }
 
---Enable Comment.nvim
+-----------------------------------------------------------
+-- Enable comment.vim
+-----------------------------------------------------------
 require('Comment').setup()
 
---Remap space as leader key
+-----------------------------------------------------------
+-- Keymappings
+-----------------------------------------------------------
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -217,7 +241,6 @@ vim.g.maplocalleader = ' '
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
---Remap to toggle NvimTree
 vim.keymap.set('n', ';', '<cmd>NvimTreeToggle<CR>', { remap = true })
 
 -- Highlight on yank
@@ -236,7 +259,9 @@ vim.g.indent_blankline_filetype_exclude = { 'help', 'packer' }
 vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
 vim.g.indent_blankline_show_trailing_blankline_indent = false
 
--- Gitsigns
+-----------------------------------------------------------
+-- Setup gitsigns
+-----------------------------------------------------------
 require('gitsigns').setup {
   signs = {
     add = { text = '+' },
@@ -247,7 +272,9 @@ require('gitsigns').setup {
   },
 }
 
--- Telescope
+-----------------------------------------------------------
+-- Setup telescope
+-----------------------------------------------------------
 require('telescope').setup {
   defaults = {
     mappings = {
@@ -259,29 +286,34 @@ require('telescope').setup {
   },
 }
 
--- Enable telescope fzf native
+-----------------------------------------------------------
+-- Setup telescope with fzf
+-----------------------------------------------------------
 require('telescope').load_extension 'fzf'
 
---Add leader shortcuts
+-----------------------------------------------------------
+-- Leaderkey Shortcuts
+-----------------------------------------------------------
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers)
-vim.keymap.set('n', '<leader>sf', function()
-  require('telescope.builtin').find_files { previewer = false }
-end)
 vim.keymap.set('n', '<leader>sb', require('telescope.builtin').current_buffer_fuzzy_find)
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags)
 vim.keymap.set('n', '<leader>st', require('telescope.builtin').tags)
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').grep_string)
 vim.keymap.set('n', '<leader>sp', require('telescope.builtin').live_grep)
+vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles)
 vim.keymap.set('n', '<leader>so', function()
   require('telescope.builtin').tags { only_current_buffer = true }
 end)
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles)
+vim.keymap.set('n', '<leader>sf', function()
+  require('telescope.builtin').find_files { previewer = false }
+end)
 
--- Treesitter configuration
--- Parsers must be installed manually via :TSInstall
+-----------------------------------------------------------
+-- Setup treesitter (install langs with :TSInstall)
+-----------------------------------------------------------
 require('nvim-treesitter.configs').setup {
   highlight = {
-    enable = true, -- false will disable the whole extension
+    enable = true,
   },
   incremental_selection = {
     enable = true,
@@ -330,13 +362,17 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
--- Diagnostic keymaps
+-----------------------------------------------------------
+-- Diagnostic keymap
+-----------------------------------------------------------
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
--- LSP settings
+-----------------------------------------------------------
+-- LSP Settings
+-----------------------------------------------------------
 local lspconfig = require 'lspconfig'
 local on_attach = function(_, bufnr)
   local opts = { buffer = bufnr }
@@ -404,10 +440,14 @@ lspconfig.sumneko_lua.setup {
   },
 }
 
--- luasnip setup
+-----------------------------------------------------------
+-- Setup luasnip
+-----------------------------------------------------------
 local luasnip = require 'luasnip'
 
--- nvim-cmp setup
+-----------------------------------------------------------
+-- Setup nvim-cmp
+-----------------------------------------------------------
 local cmp = require 'cmp'
 cmp.setup {
   snippet = {
@@ -447,4 +487,3 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
--- vim: ts=2 sts=2 sw=2 et
