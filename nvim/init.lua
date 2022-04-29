@@ -13,4 +13,5 @@ require '_comment'
 require '_gitsigns'
 require '_toggleterm'
 require '_lsp'
-
+require '_bufferline'
+require '_whichkey'

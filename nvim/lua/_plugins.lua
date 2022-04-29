@@ -60,6 +60,8 @@ return packer.startup(function(use)
     use 'windwp/nvim-autopairs'
     use 'lewis6991/impatient.nvim'
     use 'akinsho/toggleterm.nvim'
+    use "folke/which-key.nvim"
+    use {'akinsho/bufferline.nvim', tag = "*", requires = 'kyazdani42/nvim-web-devicons'}
     use { 
         'nvim-telescope/telescope.nvim', 
         requires = { 
