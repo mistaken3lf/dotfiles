@@ -1,4 +1,5 @@
 require '_plugins'
+require '_nvim-lsp-installer'
 require '_colorscheme'
 require '_keymaps'
 require '_impatient'

@@ -49,7 +49,10 @@ return packer.startup(function(use)
     use 'lukas-reineke/indent-blankline.nvim'
     use 'nvim-treesitter/nvim-treesitter'
     use 'nvim-treesitter/nvim-treesitter-textobjects'
-    use 'neovim/nvim-lspconfig'
+    use {
+      "williamboman/nvim-lsp-installer",
+      "neovim/nvim-lspconfig",
+    }
     use "hrsh7th/nvim-cmp" 
     use "hrsh7th/cmp-buffer" 
     use "hrsh7th/cmp-path" 
