@@ -48,34 +48,14 @@ nvim_tree.setup {
     },
     icons = {
       webdev_colors = true,
-      glyphs = {
-        default = "",
-        symlink = "",
-        git = {
-          unstaged = "",
-          staged = "S",
-          unmerged = "",
-          renamed = "➜",
-          deleted = "",
-          untracked = "U",
-          ignored = "◌",
-        },
-        folder = {
-          default = "",
-          open = "",
-          empty = "",
-          empty_open = "",
-          symlink = "",
-        },
-      }
-    },
+         },
   },
   hijack_directories = {
     enable = true,
     auto_open = true,
   },
   update_focused_file = {
-    enable = false,
+    enable = true,
     update_cwd = false,
     ignore_list = {},
   },
@@ -101,7 +81,7 @@ nvim_tree.setup {
   },
   git = {
     enable = true,
-    ignore = true,
+    ignore = false,
     timeout = 400,
   },
   actions = {
