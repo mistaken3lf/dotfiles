@@ -78,7 +78,10 @@ telescope.setup {
   pickers = {
     find_files = {
       hidden = true,
-    }
+    },
+     planets = {
+      show_pluto = true,
+    },
   },
   extensions = {
     -- Your extension configuration goes here:

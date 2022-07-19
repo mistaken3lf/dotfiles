@@ -13,7 +13,10 @@ local servers = {
   "gopls",
   'rust_analyzer',
   'tailwindcss',
-  'cssls'
+  'cssls',
+  'csharp_ls',
+  'eslint',
+  'html',
 }
 
 lsp_installer.setup {

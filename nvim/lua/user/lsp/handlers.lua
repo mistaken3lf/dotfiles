@@ -1,6 +1,5 @@
 local M = {}
 
--- TODO: backfill this to template
 M.setup = function()
   local signs = {
     { name = "DiagnosticSignError", text = "" },
@@ -45,11 +44,11 @@ end
 
 local function lsp_highlight_document(client)
   -- Set autocommands conditional on server_capabilities
-    local status_ok, illuminate = pcall(require, "illuminate")
-    if not status_ok then
-      return
-    end
-    illuminate.on_attach(client)
+  local status_ok, illuminate = pcall(require, "illuminate")
+  if not status_ok then
+    return
+  end
+  illuminate.on_attach(client)
   -- end
 end
 
@@ -60,10 +59,7 @@ local function lsp_keymaps(bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>f", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
   vim.api.nvim_buf_set_keymap(
     bufnr,
@@ -78,8 +74,6 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
--- vim.notify(client.name .. " starting...")
--- TODO: refactor this into a method that checks if string in list
   if client.name == "tsserver" then
     client.resolved_capabilities.document_formatting = false
   end
