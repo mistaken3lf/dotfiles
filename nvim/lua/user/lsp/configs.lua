@@ -24,6 +24,7 @@ local servers = {
   'csharp_ls',
   'eslint',
   'html',
+  'pyright'
 }
 
 mason_lsp_config.setup {
