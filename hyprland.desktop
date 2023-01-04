@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Hyprland
+Comment=An intelligent dynamic tiling Wayland compositor
+Exec=/home/knipferrc/.config/hypr/exec_hyprland
+Type=Xsession
+Icon=hyprland
+Encoding=UTF-8
