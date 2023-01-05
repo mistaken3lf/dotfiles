@@ -41,7 +41,7 @@
 - sudo usermod -aG wheel $(whoami)
 
 ### Packages
-- `go firefox linux-headers nvidia-dkms ttc-iosevka steam visual-studio-code-bin hyprland-bin waybar-hyprland-git tlp sddm swaybg polkit polkit-gnome wofi mako acpilight xdg-desktop-portal-wlr pamixer bluez blueman bluez-utils swaylock slurp gnome-themes-extra sddm-sugar-candy-git foot thunar-archive-plugin file-roller xarchiver redshift-wayland-git grim qt5-wayland qt5ct libva nvidia-vaapi-driver-git wlogout`
+- `go firefox linux-headers nvidia-dkms ttc-iosevka steam visual-studio-code-bin hyprland-bin waybar-hyprland-git tlp sddm swaybg polkit polkit-gnome wofi mako acpilight xdg-desktop-portal-wlr pamixer bluez blueman bluez-utils swaylock slurp gnome-themes-extra sddm-sugar-candy-git foot thunar-archive-plugin file-roller xarchiver redshift-wayland-git grim qt5-wayland qt5ct libva nvidia-vaapi-driver-git wlogout wl-clipboard`
 
 ### Yay
 - `pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si`
