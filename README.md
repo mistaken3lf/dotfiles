@@ -37,10 +37,11 @@
 ### sddm sugar-candy theme
 - Create /etc/sddm.conf and copy contents from conf file
 
-### Packages
+### Bluetooth (add user to group)
+- sudo usermod -aG wheel $(whoami)
 
-- `go firefox linux-headers nvidia-dkms ttc-iosevka steam visual-studio-code-bin hyprland-git waybar-hyprland-git tlp sddm swaybg polkit polkit-gnome wofi mako kitty acpilight xdg-desktop-portal-wlr pamixer bluez blueman bluez-utils swaylock slurp gnome-themes-extra sddm-sugar-candy-git foot`
+### Packages
+- `go firefox linux-headers nvidia-dkms ttc-iosevka steam visual-studio-code-bin hyprland-bin waybar-hyprland-git tlp sddm swaybg polkit polkit-gnome wofi mako acpilight xdg-desktop-portal-wlr pamixer bluez blueman bluez-utils swaylock slurp gnome-themes-extra sddm-sugar-candy-git foot thunar-archive-plugin file-roller xarchiver redshift-wayland-git grim qt5-wayland qt5ct libva`
 
 ### Yay
-
 - `pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si`
