@@ -38,8 +38,6 @@ swayimg
 swaylock
 thunar
 thunar-archive-plugin
-auto-cpufreq-git
-thermald
 ttc-iosevka
 ttf-nerd-fonts-symbols-2048-em
 vim
@@ -57,3 +55,4 @@ wget
 steam
 nodejs 
 npm
+tlp

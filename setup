@@ -18,8 +18,7 @@ sudo touch /etc/modprobe.d/nvidia.conf
 echo 'options nvidia-drm modeset=1' | sudo tee /etc/modprobe.d/nvidia.conf
 
 # Enables services
-sudo systemctl enable thermald.service
-sudo systemctl enable auto-cpufreq.service
+sudo systemctl enable tlp.service
 sudo systemctl enable sddm.service
 sudo systemctl enable bluetooth.service
 
