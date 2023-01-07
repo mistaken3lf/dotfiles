@@ -52,3 +52,5 @@ xarchiver
 xdg-desktop-portal
 xdg-desktop-portal-hyprland-git
 xdg-user-dirs
+feh
+nnn
