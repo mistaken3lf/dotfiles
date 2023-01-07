@@ -53,5 +53,4 @@ xdg-desktop-portal-hyprland-git
 xdg-user-dirs
 feh
 playerctl
-iwd
 wget
