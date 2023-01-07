@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+# Setup Yay
+sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+
+# Go back and delete the created yay directory
+cd ..
+rm -rf yay
+
+# Update packages
+yay -Syyu
+
+# Install packages from pkglist
+yay -S --needed - < pkglist.txt
+
+# Create file for nvidia used by hyprland
+sudo touch /etc/modprobe.d/nvidia.conf
+echo 'options nvidia-drm modeset=1' | sudo tee /etc/modprobe.d/nvidia.conf
+
+# Enables services
+sudo systemctl enable tlp.service
+sudo systemctl enable sddm.service
+sudo systemctl enable bluetooth.service
+sudo usermod -aG wheel $(whoami)
+
+# Copy config files
+cp -r ./foot ~/.config
+cp -r ./hypr ~/.config
+cp -r ./mako ~/.config
+cp -r ./waybar ~/.config
+cp -r ./wlogout ~/.config
+cp -r ./wofi ~/.config
+
+# Copy bash config
+cp ./.bashrc ~/
+source ~/.bashrc
+
+# Get fastest mirrors
+fastmirror
+
+# Create hyprland desktop entry
+sudo cp ./hyprland.desktop /usr/share/wayland-sessions
+
+# Copy sddm config file
+sudo cp ./sddm.conf /etc
