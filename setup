@@ -44,6 +44,10 @@ sudo cp ./hyprland.desktop /usr/share/wayland-sessions
 # Copy sddm config file
 sudo cp ./sddm.conf /etc
 
+# Enable color and multilib
 sed -i '/Color/s/^#//' /etc/pacman.conf
 sed -i '/Color/a ILoveCandy' /etc/pacman.conf
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+
+# Update packages
+yay -Syyu
