@@ -22,6 +22,7 @@ sudo systemctl enable tlp.service
 sudo systemctl enable sddm.service
 sudo systemctl enable bluetooth.service
 sudo usermod -aG wheel $(whoami)
+sudo usermod -aG video $(whoami)
 
 # Copy config files
 cp -r ./foot ~/.config
@@ -34,9 +35,6 @@ cp -r ./wofi ~/.config
 # Copy bash config
 cp ./.bashrc ~/
 source ~/.bashrc
-
-# Get fastest mirrors
-fastmirror
 
 # Create hyprland desktop entry
 sudo cp ./hyprland.desktop /usr/share/wayland-sessions
