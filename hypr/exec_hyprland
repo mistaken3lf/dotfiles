@@ -4,11 +4,17 @@ cd ~
 
 export _JAVA_AWT_WM_NONREPARENTING=1
 export XCURSOR_SIZE=22
-export XDG_SESSION_TYPE=wayland
 export WLR_NO_HARDWARE_CURSORS=1
+export XDG_CURRENT_DESKTOP=Hyprland
+export XDG_SESSION_DESKTOP=Hyprland
+export XDG_SESSION_TYPE=wayland
 export MOZ_ENABLE_WAYLAND=1
 export LIBVA_DRIVER_NAME=nvidia
-export XDG_SESSION_TYPE=wayland
 export __GLX_VENDOR_LIBRARY_NAME=nvidia
+export __NV_PRIME_RENDER_OFFLOAD=1
+export __VK_LAYER_NV_optimus=NVIDIA_only
+export GDM_BACKEND=nvidia-drm
+export NVD_BACKEND=direct
+export MOZ_DISABLE_RDD_SANDBOX=1
 
-exec Hyprland
+exec  Hyprland

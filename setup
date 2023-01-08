@@ -24,7 +24,7 @@ echo 'options nvidia-drm modeset=1' | sudo tee /etc/modprobe.d/nvidia.conf
 
 # Enables services
 echo 'Enabling services'
-sudo systemctl enable tlp.service
+sudo systemctl enable enable com.system76.PowerDaemon.service
 sudo systemctl enable sddm.service
 sudo systemctl enable bluetooth.service
 

@@ -54,4 +54,7 @@ wget
 steam
 nodejs 
 npm
-tlp
+system76-power
+rust
+rust-analyzer
+cpupower
