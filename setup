@@ -1,32 +1,40 @@
 #!/usr/bin/env bash
 
 # Setup Yay
+echo 'Setting up yay'
 sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 
 # Go back and delete the created yay directory
+echo 'Remove yay folder'
 cd ..
 rm -rf yay
 
 # Update packages
+echo 'Updating packages'
 yay -Syyu
 
 # Install packages from pkglist
+echo 'Installing requested packages'
 yay -S --needed - < pkglist.txt
 
 # Create file for nvidia used by hyprland
+echo 'Setup nvidia.conf'
 sudo touch /etc/modprobe.d/nvidia.conf
 echo 'options nvidia-drm modeset=1' | sudo tee /etc/modprobe.d/nvidia.conf
 
 # Enables services
+echo 'Enabling services'
 sudo systemctl enable tlp.service
 sudo systemctl enable sddm.service
 sudo systemctl enable bluetooth.service
 
 # Add user to groups
+echo 'Add user to wheel and video groups'
 sudo usermod -aG wheel $(whoami)
 sudo usermod -aG video $(whoami)
 
 # Copy config files
+echo 'Copying config files'
 cp -r ./foot ~/.config
 cp -r ./hypr ~/.config
 cp -r ./mako ~/.config
@@ -35,19 +43,41 @@ cp -r ./wlogout ~/.config
 cp -r ./wofi ~/.config
 
 # Copy bash config
+echo 'Copy bash config'
 cp ./.bashrc ~/
 source ~/.bashrc
 
 # Create hyprland desktop entry
+echo 'Create custom hyprland desktop entry'
 sudo cp ./hyprland.desktop /usr/share/wayland-sessions
 
 # Copy sddm config file
+echo 'Copy sddm config file'
 sudo cp ./sddm.conf /etc
 
-# Enable color and multilib
-sed -i '/Color/s/^#//' /etc/pacman.conf
-sed -i '/Color/a ILoveCandy' /etc/pacman.conf
-sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+# Setup pacman with parallel downloads and color
+echo 'Enabling parallel downloads and colors'
+sudo sed -i '/Color/s/^#//' /etc/pacman.conf
+sudo sed -i '/Color/a ILoveCandy' /etc/pacman.conf
+sudo sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 25/g' /etc/pacman.conf
+
+# Get fastest mirrors
+echo 'Getting fastest mirrors'
+sudo reflector --verbose --country 'United States' -l 20 -p https --sort rate --save /etc/pacman.d/mirrorlist
 
 # Update packages
+echo 'Updating packages'
 yay -Syyu
+
+# Update mkinitcpio with nvidia config
+echo "Updating mkinitcpio config with nvidia"
+sudo echo "
+MODULES=(btrfs nvidia nvidia_modeset nvidia_uvm nvidia_drm)
+BINARIES=(/usr/bin/btrfs)
+FILES=()
+HOOKS=(base udev autodetect keyboard keymap modconf block filesystems fsck)" > /etc/mkinitcpio.conf
+
+# Add nvidia to systemd-boot 
+echo 'Setup nvidia systemd-boot'
+sudo sed -i "s/rootfstype=btrfs/& cow_spacesize=10G copytoram=n nvidia nvidia-drm.modeset=1 nouveau.modeset=0 i915.modeset=1 radeon.modeset=1 nvme_load=yes module_blacklist=pcspk/" /boot/loader/entries/*.conf

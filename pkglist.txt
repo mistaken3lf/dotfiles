@@ -34,7 +34,6 @@ sddm-sugar-candy-git
 slurp
 swaybg
 swayidle
-swayimg
 swaylock
 thunar
 thunar-archive-plugin
