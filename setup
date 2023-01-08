@@ -24,7 +24,7 @@ echo 'options nvidia-drm modeset=1' | sudo tee /etc/modprobe.d/nvidia.conf
 
 # Enables services
 echo 'Enabling services'
-sudo systemctl enable enable com.system76.PowerDaemon.service
+sudo systemctl enable com.system76.PowerDaemon.service
 sudo systemctl enable sddm.service
 sudo systemctl enable bluetooth.service
 
@@ -49,7 +49,7 @@ source ~/.bashrc
 
 # Create hyprland desktop entry
 echo 'Create custom hyprland desktop entry'
-sudo cp ./hyprland.desktop /usr/share/wayland-sessions
+sudo cp ./hyprland.desktop /usr/share/wayland-sessions/
 
 # Copy sddm config file
 echo 'Copy sddm config file'
@@ -60,7 +60,7 @@ echo 'Enabling parallel downloads and colors'
 sudo sed -i '/Color/s/^#//' /etc/pacman.conf
 sudo sed -i '/Color/a ILoveCandy' /etc/pacman.conf
 sudo sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
-sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 25/g' /etc/pacman.conf
+sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 25/g' /etc/pacman.conf
 
 # Get fastest mirrors
 echo 'Getting fastest mirrors'
@@ -72,11 +72,11 @@ yay -Syyu
 
 # Update mkinitcpio with nvidia config
 echo "Updating mkinitcpio config with nvidia"
-sudo echo "
+echo "
 MODULES=(btrfs nvidia nvidia_modeset nvidia_uvm nvidia_drm)
 BINARIES=(/usr/bin/btrfs)
 FILES=()
-HOOKS=(base udev autodetect keyboard keymap modconf block filesystems fsck)" > /etc/mkinitcpio.conf
+HOOKS=(base udev autodetect keyboard keymap modconf block filesystems fsck)" | sudo tee /etc/mkinitcpio.conf
 
 # Add nvidia to systemd-boot 
 echo 'Setup nvidia systemd-boot'
