@@ -8,6 +8,13 @@ sudo reflector --verbose --country 'United States' -l 20 -p https --sort rate --
 echo 'Setting up yay'
 sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 
+# Setup pacman with parallel downloads and color
+echo 'Enabling parallel downloads and colors'
+sudo sed -i '/Color/s/^#//' /etc/pacman.conf
+sudo sed -i '/Color/a ILoveCandy' /etc/pacman.conf
+sudo sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 25/g' /etc/pacman.conf
+
 # Go back and delete the created yay directory
 echo 'Remove yay folder'
 cd ..
@@ -19,7 +26,67 @@ yay -Syyu
 
 # Install packages from pkglist
 echo 'Installing requested packages'
-yay -S --needed - < pkglist.txt
+yay -S acpilight
+yay -S blueman
+yay -S bluez
+yay -S bluez-utils
+yay -S candy-icons-git
+yay -S cpio
+yay -S file-roller
+yay -S firefox
+yay -S foot
+yay -S git
+yay -S gnome-keyring
+yay -S gnome-themes-extra
+yay -S go
+yay -S grim
+yay -S gzip
+yay -S hyprland-git
+yay -S hyprpicker-git
+yay -S linux
+yay -S linux-headers
+yay -S make
+yay -S mako
+yay -S neofetch
+yay -S nvidia-dkms
+yay -S nvidia-vaapi-driver-git
+yay -S pamixer
+yay -S pavucontrol
+yay -S polkit-gnome
+yay -S qt5-wayland
+yay -S qt5ct
+yay -S redshift-wayland-git
+yay -S reflector
+yay -S sddm
+yay -S sddm-sugar-candy-git
+yay -S slurp
+yay -S swaybg
+yay -S swayidle
+yay -S swaylock
+yay -S thunar
+yay -S thunar-archive-plugin
+yay -S ttc-iosevka
+yay -S ttf-nerd-fonts-symbols-2048-em
+yay -S vim
+yay -S visual-studio-code-bin
+yay -S waybar-hyprland
+yay -S wl-clipboard
+yay -S wlogout
+yay -S wofi
+yay -S xarchiver
+yay -S xdg-desktop-portal-hyprland-git
+yay -S xdg-user-dirs
+yay -S feh
+yay -S playerctl
+yay -S wget
+yay -S steam
+yay -S rust
+yay -S rust-analyzer
+yay -S cpupower
+yay -S nodejs
+yay -S npm
+yay -S beautyline
+yay -S power-profiles-daemon
 
 # Create file for nvidia used by hyprland
 echo 'Setup nvidia.conf'
@@ -57,17 +124,6 @@ sudo cp ./hyprland.desktop /usr/share/wayland-sessions/
 # Copy sddm config file
 echo 'Copy sddm config file'
 sudo cp ./sddm.conf /etc
-
-# Setup pacman with parallel downloads and color
-echo 'Enabling parallel downloads and colors'
-sudo sed -i '/Color/s/^#//' /etc/pacman.conf
-sudo sed -i '/Color/a ILoveCandy' /etc/pacman.conf
-sudo sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
-sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 25/g' /etc/pacman.conf
-
-# Update packages
-echo 'Updating packages'
-yay -Syyu
 
 # Update mkinitcpio with nvidia config
 echo "Updating mkinitcpio config with nvidia"
