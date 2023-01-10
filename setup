@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Get fastest mirrors
+echo 'Getting fastest mirrors'
+sudo reflector --verbose --country 'United States' -l 20 -p https --sort rate --save /etc/pacman.d/mirrorlist
+
 # Setup Yay
 echo 'Setting up yay'
 sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
@@ -24,7 +28,7 @@ echo 'options nvidia-drm modeset=1' | sudo tee /etc/modprobe.d/nvidia.conf
 
 # Enables services
 echo 'Enabling services'
-sudo systemctl enable com.system76.PowerDaemon.service
+sudo systemctl enable power-profiles-daemon.service
 sudo systemctl enable sddm.service
 sudo systemctl enable bluetooth.service
 
@@ -45,7 +49,6 @@ cp -r ./wofi ~/.config
 # Copy bash config
 echo 'Copy bash config'
 cp ./.bashrc ~/
-source ~/.bashrc
 
 # Create hyprland desktop entry
 echo 'Create custom hyprland desktop entry'
@@ -61,10 +64,6 @@ sudo sed -i '/Color/s/^#//' /etc/pacman.conf
 sudo sed -i '/Color/a ILoveCandy' /etc/pacman.conf
 sudo sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 25/g' /etc/pacman.conf
-
-# Get fastest mirrors
-echo 'Getting fastest mirrors'
-sudo reflector --verbose --country 'United States' -l 20 -p https --sort rate --save /etc/pacman.d/mirrorlist
 
 # Update packages
 echo 'Updating packages'

@@ -3,7 +3,7 @@
 ## Set GTK Themes, Icons, Cursor and Fonts
 
 THEME='Adwaita-dark'
-ICONS='candy-icons'
+ICONS='BeautyLine'
 FONT='Iosevka 14'
 CURSOR='Adwaita'
 
