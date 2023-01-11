@@ -26,7 +26,7 @@ yay -Syyu
 
 # Install packages from pkglist
 echo 'Installing requested packages'
-yay -S acpilight blueman bluez bluez-utils cpio file-roller firefox foot git gnome-keyring arc-gtk-theme go grim gzip wireplumber linux linux-headers make mako neofetch nvidia-dkms pamixer pavucontrol polkit-kde-agent qt5-wayland qt6-wayland qt5ct reflector sddm slurp swayidle swaylock thunar thunar-archive-plugin ttc-iosevka ttf-nerd-fonts-symbols-2048-em vim wl-clipboard wofi xarchive xdg-user-dirs feh playerctl wget steam rust rust-analyzer cpupower nodejs npm power-profiles-daemon
+yay -S acpilight blueman bluez bluez-utils swappy firefox foot git gnome-keyring arc-gtk-theme go grim wireplumber linux linux-headers make mako neofetch nvidia-dkms pamixer pavucontrol polkit-kde-agent qt5-wayland qt6-wayland qt5ct reflector sddm slurp swayidle swaylock ttc-iosevka ttf-nerd-fonts-symbols-2048-em vim wl-clipboard wofi xdg-user-dirs feh playerctl wget steam rust rust-analyzer cpupower nodejs npm power-profiles-daemon
 
 echo 'Installing AUR packages'
 yay -S candy-icons-git
