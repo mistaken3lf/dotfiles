@@ -141,7 +141,7 @@
     "on-click": "pavucontrol"
   },
   "custom/power": {
-    "format": " 襤 ",
+    "format": " ⏻ ",
     "tooltip": false,
     "on-click": "wlogout"
   }
