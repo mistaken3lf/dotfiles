@@ -26,7 +26,7 @@ yay -Syyu
 
 # Install packages from pkglist
 echo 'Installing requested packages'
-yay -S acpilight blueman bluez bluez-utils swappy firefox foot git gnome-keyring arc-gtk-theme go grim wireplumber linux linux-headers make mako neofetch nvidia-dkms pamixer pavucontrol polkit-gnome qt5-wayland qt6-wayland qt5ct reflector sddm slurp swayidle swaylock ttc-iosevka ttf-nerd-fonts-symbols-2048-em vim wl-clipboard wofi xdg-user-dirs feh playerctl wget steam rust rust-analyzer cpupower nodejs npm power-profiles-daemon noto-fonts-cjk xplr gammastep helix network-manager-applet
+yay -S acpilight blueman bluez bluez-utils swappy firefox foot git gnome-keyring arc-gtk-theme go grim wireplumber linux linux-headers make mako neofetch nvidia-dkms pamixer pavucontrol polkit-gnome qt5-wayland qt6-wayland qt5ct reflector sddm slurp swayidle swaylock ttc-iosevka ttf-nerd-fonts-symbols-2048-em vim wl-clipboard wofi xdg-user-dirs feh playerctl wget steam rust rust-analyzer cpupower nodejs npm power-profiles-daemon noto-fonts-cjk gammastep helix network-manager-applet nnn
 
 echo 'Installing AUR packages'
 yay -S candy-icons-git
@@ -66,6 +66,7 @@ cp -r ./mako ~/.config
 cp -r ./waybar ~/.config
 cp -r ./wlogout ~/.config
 cp -r ./wofi ~/.config
+cp -r ./gammastep ~/.config
 
 # Copy bash config
 echo 'Copy bash config'
