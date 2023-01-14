@@ -1,6 +1,7 @@
 {
   "height": 30,
   "spacing": 5,
+  "layer": "top",
   "modules-left": [
     "wlr/workspaces"
   ],
@@ -17,7 +18,7 @@
     "backlight",
     "keyboard-state",
     "battery",
-    "bluetooth",
+    "tray",
     "clock",
     "custom/power"
   ],
@@ -144,5 +145,9 @@
     "format": " ⏻ ",
     "tooltip": false,
     "on-click": "wlogout"
+  },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 5
   }
 }
