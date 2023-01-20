@@ -1,0 +1,19 @@
+theme = "catppuccin_mocha"
+
+[editor]
+bufferline = "always"
+auto-format = true
+
+[editor.lsp]
+display-messages = true
+
+[editor.cursor-shape]
+normal = "block"
+insert = "bar"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
+[keys.insert]
+j = { k = "normal_mode" }
