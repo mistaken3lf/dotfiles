@@ -4,7 +4,7 @@
 
 THEME='Arc-Dark'
 ICONS='BeautyLine'
-FONT='JetBrainsMono Nerd Font 14'
+FONT='JetBrains Mono 14'
 CURSOR='Bibata-Modern-Ice'
 
 SCHEMA='gsettings set org.gnome.desktop.interface'
