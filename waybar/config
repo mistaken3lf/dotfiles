@@ -54,7 +54,7 @@
     }
   },
   "idle_inhibitor": {
-    "format": "{icon}",
+    "format": "{icon} ",
     "format-icons": {
       "activated": "",
       "deactivated": ""
@@ -147,7 +147,7 @@
     "on-click": "wlogout"
   },
   "tray": {
-    "icon-size": 16,
+    "icon-size": 20,
     "spacing": 5
   }
 }
