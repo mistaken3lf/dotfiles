@@ -61,7 +61,7 @@ button:hover {
 #tray,
 #mode,
 #idle_inhibitor {
-  padding: 5px 15px;
+  padding: 0px 15px;
   border-radius: 20px;
   color: #ffffff;
 }
