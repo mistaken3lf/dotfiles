@@ -26,15 +26,16 @@ yay -Syyu
 
 # Install packages from pkglist
 echo 'Installing requested packages'
-yay -S acpilight blueman bluez sddm bluez-utils swappy firefox foot git gnome-keyring arc-gtk-theme go grim wireplumber linux linux-headers make mako neofetch nvidia-dkms pamixer pavucontrol polkit-gnome qt5-wayland qt6-wayland qt5ct qt6ct reflector slurp swayidle swaylock ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em vim wl-clipboard wofi xdg-user-dirs feh playerctl wget steam rust rust-analyzer cpupower nodejs npm power-profiles-daemon noto-fonts-cjk gammastep helix network-manager-applet nnn
+yay -S acpilight blueman bluez bluez-utils swappy firefox foot git go grim wireplumber linux linux-headers make mako neofetch nvidia-dkms pamixer pavucontrol polkit-gnome qt5-wayland qt6-wayland qt5ct qt6ct reflector slurp swayidle swaylock ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wl-clipboard wofi xdg-user-dirs feh playerctl wget steam rust rust-analyzer cpupower nodejs npm power-profiles-daemon noto-fonts-cjk gammastep helix network-manager-applet thunar thunar-archive-plugin file-roller thunar-volman gvfs xarchiver
 
 echo 'Installing AUR packages'
+yay -S nordic-theme
+yay -S sddm-git
 yay -S candy-icons-git
 yay -S hyprland-git
 yay -S hyprpicker-git
 yay -S nvidia-vaapi-driver-git
 yay -S xdg-desktop-portal-hyprland-git
-yay -S sddm-sugar-candy-git
 yay -S visual-studio-code-bin
 yay -S waybar-hyprland-git
 yay -S wlogout
@@ -75,11 +76,7 @@ cp ./.bashrc ~/
 
 # Create hyprland desktop entry
 echo 'Create custom hyprland desktop entry'
-sudo cp ./hyprland.desktop /usr/share/wayland-sessions/
-
-# Copy sddm config file
-echo 'Copy sddm config file'
-sudo cp ./sddm.conf /etc
+sudo cp ./hyprland.desktop /usr/share/wayland-sessions/hyprland-nvidia.desktop
 
 # Update mkinitcpio with nvidia config
 echo "Updating mkinitcpio config with nvidia"
