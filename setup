@@ -26,10 +26,9 @@ yay -Syyu
 
 # Install packages from pkglist
 echo 'Installing requested packages'
-yay -S acpilight blueman bluez bluez-utils swappy gnome-keyring firefox foot git go grim wireplumber linux linux-headers make mako neofetch nvidia-dkms pamixer pavucontrol polkit-gnome qt5-wayland qt6-wayland qt5ct qt6ct reflector slurp swayidle swaylock ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wl-clipboard wofi xdg-user-dirs feh playerctl wget steam rust rust-analyzer cpupower nodejs npm power-profiles-daemon noto-fonts-cjk gammastep helix network-manager-applet thunar thunar-archive-plugin file-roller thunar-volman gvfs xarchiver tumbler
+yay -S acpilight blueman bluez bluez-utils swappy gnome-themes-extra gnome-keyring firefox foot git go grim wireplumber linux linux-headers make mako neofetch nvidia-dkms pamixer pavucontrol polkit-gnome qt5-wayland qt6-wayland qt5ct qt6ct reflector slurp swayidle swaylock ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wl-clipboard wofi xdg-user-dirs feh playerctl wget steam rust rust-analyzer cpupower nodejs npm power-profiles-daemon noto-fonts-cjk gammastep helix network-manager-applet thunar thunar-archive-plugin file-roller thunar-volman gvfs xarchiver tumbler
 
 echo 'Installing AUR packages'
-yay -S graphite-gtk-theme
 yay -S sddm-git
 yay -S candy-icons-git
 yay -S hyprland-git
