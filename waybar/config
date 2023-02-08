@@ -2,6 +2,9 @@
   "height": 30,
   "spacing": 5,
   "layer": "top",
+  "margin-top": 5,
+  "margin-left": 10,
+  "margin-right": 10,
   "modules-left": [
     "wlr/workspaces"
   ],
