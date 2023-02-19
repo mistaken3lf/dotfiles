@@ -38,10 +38,6 @@ button:hover {
   color: #c33ee8;
 }
 
-#workspaces button.active {
-  color: #c33ee8;
-}
-
 #workspaces button.urgent {
   background-color: #eb4d4b;
 }
