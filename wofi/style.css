@@ -6,7 +6,6 @@
 #window {
   background-color: --wofi-color0;
   color: --wofi-color2;
-  border: 2px solid #c33ee8;
   border-radius: 0px;
 }
 
@@ -15,7 +14,7 @@
 }
 
 #input {
-  background-color: --wofi-color1;
+  background-color: --wofi-color0;
   border: 1px solid #c33ee8;
   padding: 8px 12px;
 }
@@ -42,7 +41,6 @@
 }
 
 #entry:selected {
-  background-color: --wofi-color3;
   color: --wofi-color0;
 }
 

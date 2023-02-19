@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Install Reflector
+sudo pacman -S reflector
+
 # Get fastest mirrors
 echo 'Getting fastest mirrors'
 sudo reflector --verbose --country 'United States' -l 20 -p https --sort rate --save /etc/pacman.d/mirrorlist
