@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+# Get fastest mirrors
+echo 'Getting fastest mirrors'
+sudo reflector --verbose --country 'United States' -l 20 -p https --sort rate --save /etc/pacman.d/mirrorlist
+
+# Setup pacman with parallel downloads and color
+echo 'Enabling parallel downloads and colors'
+sudo sed -i '/Color/s/^#//' /etc/pacman.conf
+sudo sed -i '/Color/a ILoveCandy' /etc/pacman.conf
+sudo sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 25/g' /etc/pacman.conf
+
+# Setup Yay
+echo 'Setting up yay'
+sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+
+# Go back and delete the created yay directory
+echo 'Remove yay folder'
+cd ..
+rm -rf yay
+
+# Update packages
+echo 'Updating packages'
+yay -Syyu
+
+# Install packages from pkglist
+echo 'Installing requested packages'
+yay -S firefox git make neofetch nvidia-dkms reflector ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wget steam rust rust-analyzer nodejs npm power-profiles-daemon noto-fonts-cjk
+
+echo 'Installing AUR packages'
+yay -S visual-studio-code-bin
+
+# Create file for nvidia used by hyprland
+echo 'Setup nvidia.conf'
+sudo touch /etc/modprobe.d/nvidia.conf
+echo 'options nvidia-drm modeset=1' | sudo tee /etc/modprobe.d/nvidia.conf
+
+# Enables services
+echo 'Enabling services'
+sudo systemctl enable power-profiles-daemon.service
+sudo systemctl enable sddm.service
+sudo systemctl enable bluetooth.service
+
+# Add user to groups
+echo 'Add user to wheel and video groups'
+sudo usermod -aG wheel $(whoami)
+sudo usermod -aG video $(whoami)
+
+# Copy bash config
+echo 'Copy bash config'
+cp ./.bashrc ~/
+
+# Update mkinitcpio with nvidia config
+echo "Updating mkinitcpio config with nvidia"
+echo "
+MODULES=(btrfs nvidia nvidia_modeset nvidia_uvm nvidia_drm)
+BINARIES=(/usr/bin/btrfs)
+FILES=()
+HOOKS=(base udev autodetect keyboard keymap modconf block filesystems fsck)" | sudo tee /etc/mkinitcpio.conf
+
+# Add nvidia to systemd-boot 
+echo 'Setup nvidia systemd-boot'
+sudo sed -i "s/rootfstype=btrfs/& cow_spacesize=10G copytoram=n nvidia nvidia-drm.modeset=1 nouveau.modeset=0 i915.modeset=1 radeon.modeset=1 nvme_load=yes module_blacklist=pcspk/" /boot/loader/entries/*.conf
