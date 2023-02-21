@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Install Reflector
+sudo pacman -S reflector
+
 # Get fastest mirrors
 echo 'Getting fastest mirrors'
 sudo reflector --verbose --country 'United States' -l 20 -p https --sort rate --save /etc/pacman.d/mirrorlist
@@ -11,25 +14,38 @@ sudo sed -i '/Color/a ILoveCandy' /etc/pacman.conf
 sudo sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 25/g' /etc/pacman.conf
 
-# Setup Yay
-echo 'Setting up yay'
-sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+# Install rust
+sudo pacman -S rust rust-analyzer
 
-# Go back and delete the created yay directory
-echo 'Remove yay folder'
+# Setup Paru
+echo 'Setting up paru'
+sudo pacman -S --needed base-devel && git clone https://aur.archlinux.org/paru.git && cd paru && makepkg -si
+
+# Go back and delete the created paru directory
+echo 'Remove paru folder'
 cd ..
-rm -rf yay
+rm -rf paru
 
 # Update packages
 echo 'Updating packages'
-yay -Syyu
+paru -Syyu
 
 # Install packages from pkglist
 echo 'Installing requested packages'
-yay -S firefox git make neofetch nvidia-dkms reflector ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wget steam rust rust-analyzer nodejs npm power-profiles-daemon noto-fonts-cjk
+paru -S acpilight blueman bluez bluez-utils swappy gnome-keyring firefox foot git grim wireplumber linux linux-headers make mako neofetch nvidia-dkms pamixer pavucontrol polkit-gnome qt5-wayland qt6-wayland qt5ct qt6ct reflector slurp swayidle swaylock ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wl-clipboard wofi xdg-user-dirs feh playerctl wget steam cpupower nodejs npm power-profiles-daemon noto-fonts-cjk gammastep helix network-manager-applet thunar thunar-archive-plugin file-roller thunar-volman gvfs xarchiver tumbler gparted xorg-xhost sddm godot
 
 echo 'Installing AUR packages'
-yay -S visual-studio-code-bin
+paru -S candy-icons-git
+paru -S otis-theme-git
+paru -S hyprland-git
+paru -S hyprpicker-git
+paru -S nvidia-vaapi-driver-git
+paru -S xdg-desktop-portal-hyprland-git
+paru -S visual-studio-code-bin
+paru -S waybar-hyprland-git
+paru -S wlogout
+paru -S bibata-cursor-theme
+paru -S hyprpaper-git
 
 # Create file for nvidia used by hyprland
 echo 'Setup nvidia.conf'
@@ -47,9 +63,24 @@ echo 'Add user to wheel and video groups'
 sudo usermod -aG wheel $(whoami)
 sudo usermod -aG video $(whoami)
 
+# Copy config files
+echo 'Copying config files'
+cp -r ./foot ~/.config
+cp -r ./hypr ~/.config
+cp -r ./mako ~/.config
+cp -r ./waybar ~/.config
+cp -r ./wlogout ~/.config
+cp -r ./wofi ~/.config
+cp -r ./gammastep ~/.config
+cp -r ./helix ~/.config
+
 # Copy bash config
 echo 'Copy bash config'
 cp ./.bashrc ~/
+
+# Create hyprland desktop entry
+echo 'Create custom hyprland desktop entry'
+sudo cp ./hyprland.desktop /usr/share/wayland-sessions/hyprland-nvidia.desktop
 
 # Update mkinitcpio with nvidia config
 echo "Updating mkinitcpio config with nvidia"
