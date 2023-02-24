@@ -39,7 +39,7 @@ button:hover {
 }
 
 #workspaces button.urgent {
-  background-color: #eb4d4b;
+  color: #eb4d4b;
 }
 
 #clock,
@@ -77,8 +77,14 @@ button:hover {
   }
 }
 
+#battery.warning:not(.charging) {
+  color: #f53c3c;
+  background: transparent;
+}
+
 #battery.critical:not(.charging) {
   color: #f53c3c;
+  background: transparent;
   animation-name: blink;
   animation-duration: 0.5s;
   animation-timing-function: linear;
