@@ -35,9 +35,10 @@ yay -Syyu
 
 # Install packages from pkglist
 echo 'Installing requested packages'
-yay -S acpilight blueman bluez bluez-utils swappy gnome-keyring firefox foot git grim wireplumber linux linux-headers make mako neofetch nvidia-dkms pamixer pavucontrol polkit-gnome qt5-wayland qt6-wayland qt5ct qt6ct reflector slurp swayidle swaylock ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wl-clipboard wofi xdg-user-dirs feh playerctl wget steam cpupower nodejs npm power-profiles-daemon noto-fonts-cjk gammastep helix network-manager-applet thunar thunar-archive-plugin file-roller thunar-volman gvfs xarchiver tumbler gparted xorg-xhost sddm godot
+yay -S acpilight blueman bluez bluez-utils swappy firefox foot grim wireplumber linux-headers make neofetch nvidia-dkms pamixer pavucontrol polkit-kde-agent qt5-wayland qt6-wayland qt5ct qt6ct reflector slurp swayidle swaylock ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wl-clipboard xdg-user-dirs feh playerctl wget steam cpupower nodejs npm power-profiles-daemon noto-fonts-cjk gammastep helix network-manager-applet thunar thunar-archive-plugin file-roller thunar-volman gvfs xarchiver tumbler gparted xorg-xhost godot fuzzel mako
 
 echo 'Installing AUR packages'
+yay -S sddm-git
 yay -S candy-icons-git
 yay -S otis-theme-git
 yay -S hyprland-git
@@ -73,7 +74,6 @@ cp -r ./hypr ~/.config
 cp -r ./mako ~/.config
 cp -r ./waybar ~/.config
 cp -r ./wlogout ~/.config
-cp -r ./wofi ~/.config
 cp -r ./gammastep ~/.config
 cp -r ./helix ~/.config
 
