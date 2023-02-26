@@ -20,7 +20,7 @@ function parse_git_branch {
 
 # Alias's
 alias ls='ls --color=auto'
-alias update='paru -Syyu --devel'
+alias update='yay -Syyu --devel'
 alias fastmirror="sudo reflector --verbose --country 'United States' -l 20 -p https --sort rate --save /etc/pacman.d/mirrorlist"
 alias ll="ls --color=auto -l"
 alias code="code --ozone-platform=wayland"
