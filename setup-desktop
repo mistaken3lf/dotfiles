@@ -35,7 +35,7 @@ yay -Syyu
 
 # Install packages from pkglist
 echo 'Installing requested packages'
-yay -S firefox linux-headers make neofetch nvidia-dkms ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wget steam nodejs npm noto-fonts-cjk godot qtcreator
+yay -S firefox linux-headers make neofetch nvidia-dkms ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wget steam nodejs npm noto-fonts-cjk godot qtcreator packagekit-qt5
 
 echo 'Installing AUR packages'
 yay -S visual-studio-code-bin
