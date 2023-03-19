@@ -75,7 +75,6 @@ cp -r ./mako ~/.config
 cp -r ./waybar ~/.config
 cp -r ./wlogout ~/.config
 cp -r ./gammastep ~/.config
-cp -r ./helix ~/.config
 
 # Copy bash config
 echo 'Copy bash config'

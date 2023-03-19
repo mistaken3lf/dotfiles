@@ -35,7 +35,7 @@ yay -Syyu
 
 # Install packages from pkglist
 echo 'Installing requested packages'
-yay -S firefox linux-headers make neofetch nvidia-dkms ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wget steam nodejs npm noto-fonts-cjk godot qtcreator packagekit-qt5
+yay -S firefox linux-headers make neofetch nvidia-dkms ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wget steam nodejs npm noto-fonts-cjk godot packagekit-qt5 neovim
 
 echo 'Installing AUR packages'
 yay -S visual-studio-code-bin
@@ -52,6 +52,9 @@ sudo systemctl enable bluetooth.service
 # Copy bash config
 echo 'Copy bash config'
 cp ./.bashrc ~/
+
+# Setup nvchad
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 
 # Update mkinitcpio with nvidia config
 echo "Updating mkinitcpio config with nvidia"
