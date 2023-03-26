@@ -101,7 +101,8 @@ button:hover {
 
 #tray {
   padding-right: 0;
-  padding-left: 15px;
+  padding-left: 0;
+  margin: 0;
 }
 
 #tray > .needs-attention {
