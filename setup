@@ -1,93 +1,155 @@
 #!/usr/bin/env bash
 
-# Install Reflector
-sudo pacman -S reflector
+setup_reflector() {
+    sudo pacman -S reflector
 
-# Get fastest mirrors
-echo 'Getting fastest mirrors'
-sudo reflector --verbose --country 'United States' -l 20 -p https --sort rate --save /etc/pacman.d/mirrorlist
+    echo 'Getting fastest mirrors'
+    sudo reflector --verbose --country 'United States' -l 20 -p https --sort rate --save /etc/pacman.d/mirrorlist
 
-# Setup pacman with parallel downloads and color
-echo 'Enabling parallel downloads and colors'
-sudo sed -i '/Color/s/^#//' /etc/pacman.conf
-sudo sed -i '/Color/a ILoveCandy' /etc/pacman.conf
-sudo sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
-sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 25/g' /etc/pacman.conf
+    sudo pacman -Syy
+}
 
-# Update mirrors
-sudo pacman -Syy
+pacman_tweaks() {
+    echo 'Enabling parallel downloads and colors'
+    sudo sed -i '/Color/s/^#//' /etc/pacman.conf
+    sudo sed -i '/Color/a ILoveCandy' /etc/pacman.conf
+    sudo sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+    sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 25/g' /etc/pacman.conf
 
-# Install go
-sudo pacman -S go
+    sudo pacman -Syy
+}
 
-# Setup Yay
-echo 'Setting up Yay'
-sudo pacman -S --needed base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+setup_yay() {
+    sudo pacman -S go
 
-# Go back and delete the created yay directory
-echo 'Remove yay folder'
-cd ..
-rm -rf yay
+    echo 'Setting up Yay'
+    sudo pacman -S --needed base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 
-# Update packages
-echo 'Update packages'
-yay -Syyu
+    echo 'Remove yay folder'
+    cd ..
+    rm -rf yay
 
-# Install packages
-echo 'Installing requested packages'
-yay -S acpilight blueman bluez bluez-utils swappy firefox foot grim wireplumber linux-headers make neofetch nvidia-dkms pamixer pavucontrol polkit-gnome qt6-wayland qt6ct qt5-wayland qt5ct slurp swayidle swaylock ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wl-clipboard xdg-user-dirs feh playerctl wget steam nodejs npm power-profiles-daemon noto-fonts-cjk gammastep network-manager-applet gvfs xarchiver nemo nemo-fileroller nemo-preview nemo-share godot fuzzel mako gnome-keyring rust rust-analyzer helix arc-gtk-theme
+    echo 'Update packages'
+    yay -Syy
+}
 
-echo 'Installing AUR packages'
-yay -S sddm-git
-yay -S candy-icons-git
-yay -S hyprland-git
-yay -S hyprpicker-git
-yay -S libva-nvidia-driver
-yay -S xdg-desktop-portal-hyprland-git
-yay -S visual-studio-code-bin
-yay -S waybar-hyprland-git
-yay -S wlogout
-yay -S bibata-cursor-theme
-yay -S hyprpaper-git
+setup_hyprland() {
+    echo 'Installing requested packages'
+    yay -S acpilight blueman bluez bluez-utils swappy firefox foot grim wireplumber linux-headers make neofetch nvidia-dkms pamixer pavucontrol polkit-gnome qt6-wayland qt6ct qt5-wayland qt5ct slurp swayidle swaylock ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wl-clipboard xdg-user-dirs feh playerctl wget steam nodejs npm power-profiles-daemon noto-fonts-cjk gammastep network-manager-applet gvfs xarchiver nemo nemo-fileroller nemo-preview nemo-share godot fuzzel mako gnome-keyring rust rust-analyzer helix arc-gtk-theme
 
-# Create file for nvidia used by hyprland
-echo 'Setup nvidia.conf'
-sudo touch /etc/modprobe.d/nvidia.conf
-echo 'options nvidia-drm modeset=1' | sudo tee /etc/modprobe.d/nvidia.conf
+    echo 'Installing AUR packages'
+    yay -S sddm-git
+    yay -S candy-icons-git
+    yay -S hyprland-git
+    yay -S hyprpicker-git
+    yay -S libva-nvidia-driver
+    yay -S xdg-desktop-portal-hyprland-git
+    yay -S visual-studio-code-bin
+    yay -S waybar-hyprland-git
+    yay -S wlogout
+    yay -S bibata-cursor-theme
+    yay -S hyprpaper-git
 
-# Enables services
-echo 'Enabling services'
-sudo systemctl enable power-profiles-daemon.service
-sudo systemctl enable sddm.service
-sudo systemctl enable bluetooth.service
+    echo 'Enabling services'
+    sudo systemctl enable power-profiles-daemon.service
+    sudo systemctl enable sddm.service
+    sudo systemctl enable bluetooth.service
 
-# Add user to groups
-echo 'Add user to wheel and video groups'
-sudo usermod -aG wheel $(whoami)
-sudo usermod -aG video $(whoami)
+    echo 'Add user to wheel and video groups'
+    sudo usermod -aG wheel $(whoami)
+    sudo usermod -aG video $(whoami)
 
-# Copy config files
-echo 'Copying config files'
-cp -r ./foot ~/.config
-cp -r ./hypr ~/.config
-cp -r ./mako ~/.config
-cp -r ./waybar ~/.config
-cp -r ./wlogout ~/.config
-cp -r ./helix ~/.config
-cp -r ./gammastep ~/.config
+    echo 'Copying config files'
+    cp -r ./foot ~/.config
+    cp -r ./hypr ~/.config
+    cp -r ./mako ~/.config
+    cp -r ./waybar ~/.config
+    cp -r ./wlogout ~/.config
+    cp -r ./helix ~/.config
+    cp -r ./gammastep ~/.config
+}
 
-# Copy bash config
-echo 'Copy bash config'
-cp ./.bashrc ~/
+setup_kde() {
+    echo 'Installing requested packages'
+    yay -S firefox linux-headers make neofetch nvidia-dkms ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wget steam nodejs npm noto-fonts-cjk godot packagekit-qt5 helix 
 
-# Update mkinitcpio with nvidia config
-echo "Updating mkinitcpio config with nvidia"
-echo "
-MODULES=(btrfs nvidia nvidia_modeset nvidia_uvm nvidia_drm)
-BINARIES=(/usr/bin/btrfs)
-FILES=()
-HOOKS=(base udev autodetect keyboard keymap modconf block filesystems fsck)" | sudo tee /etc/mkinitcpio.conf
+    echo 'Installing AUR packages'
+    yay -S sddm-git
+    yay -S visual-studio-code-bin
 
-# Add nvidia to systemd-boot 
-echo 'Setup nvidia systemd-boot'
-sudo sed -i "s/rootfstype=btrfs/& cow_spacesize=10G copytoram=n nvidia nvidia-drm.modeset=1 nouveau.modeset=0 i915.modeset=1 radeon.modeset=1 nvme_load=yes module_blacklist=pcspk/" /boot/loader/entries/*.conf
+    echo 'Enabling services'
+    sudo systemctl enable bluetooth.service
+}
+
+setup_nvidia() {
+    echo 'Setup nvidia.conf'
+    sudo touch /etc/modprobe.d/nvidia.conf
+    echo 'options nvidia-drm modeset=1' | sudo tee /etc/modprobe.d/nvidia.conf
+
+    echo "Updating mkinitcpio config with nvidia"
+    echo "
+    MODULES=(btrfs nvidia nvidia_modeset nvidia_uvm nvidia_drm)
+    BINARIES=(/usr/bin/btrfs)
+    FILES=()
+    HOOKS=(base udev autodetect keyboard keymap modconf block filesystems fsck)" | sudo tee /etc/mkinitcpio.conf
+
+    echo 'Setup nvidia systemd-boot'
+    sudo sed -i "s/rootfstype=btrfs/& cow_spacesize=10G copytoram=n nvidia nvidia-drm.modeset=1 nouveau.modeset=0 i915.modeset=1 radeon.modeset=1 nvme_load=yes module_blacklist=pcspk/" /boot/loader/entries/*.conf
+}
+
+setup_bashrc() {
+    echo 'Copy bash config'
+    cp ./.bashrc ~/
+}
+
+main() {
+    echo "Welcome to the setup script, lets get started!"
+
+    read -p "Do you want to setup reflector (Y/N)?" reflector
+    if [ $reflector == 'Y' ] || [ $reflector == 'y' ]; then
+        setup_reflector
+    fi
+
+    read -p "Do you want to setup parallel downloads and colors (Y/N)?" pacman
+    if [ $pacman == 'Y' ] || [ $pacman == 'y' ]; then
+        pacman_tweaks
+    fi
+
+    read -p "Do you want to setup yay (Y/N)?" yay
+    if [ $yay == 'Y' ] || [ $yay == 'y' ]; then
+        setup_yay
+    fi
+
+    read -p "Do you want to setup hyprland (Y/N)?" hyprland
+    if [ $hyprland == 'Y' ] || [ $hyprland == 'y' ]; then
+        setup_hyprland
+    fi
+
+    read -p "Do you want to setup kde packages (Y/N)?" kde
+    if [ $kde == 'Y' ] || [ $kde == 'y' ]; then
+        setup_kde
+    fi
+
+    read -p "Do you want to setup nvidia drivers (Y/N)?" nvidia
+    if [ $nvidia == 'Y' ] || [ $nvidia == 'y' ]; then
+        setup_nvidia
+    fi
+
+    read -p "Do you want to setup bashrc (Y/N)?" bashrc
+    if [ $bashrc == 'Y' ] || [ $bashrc == 'y' ]; then
+        setup_bashrc
+    fi
+}
+
+main
+
+
+
+
+
+
+
+
+
+
+
