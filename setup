@@ -35,7 +35,7 @@ setup_yay() {
 
 setup_hyprland() {
     echo 'Installing requested packages'
-    yay -S acpilight blueman bluez bluez-utils swappy firefox foot grim wireplumber linux-headers make neofetch nvidia-dkms pamixer pavucontrol polkit-gnome qt6-wayland qt6ct qt5-wayland qt5ct slurp swayidle swaylock ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wl-clipboard xdg-user-dirs feh playerctl wget steam nodejs npm power-profiles-daemon noto-fonts-cjk gammastep network-manager-applet gvfs xarchiver nemo nemo-fileroller nemo-preview nemo-share godot fuzzel mako gnome-keyring rust rust-analyzer helix arc-gtk-theme gtk4 libadwaita
+    yay -S acpilight blueman bluez bluez-utils swappy firefox foot grim wireplumber linux-headers make neofetch nvidia-dkms pamixer pavucontrol polkit-gnome qt6-wayland qt6ct qt5-wayland qt5ct slurp swayidle swaylock ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wl-clipboard xdg-user-dirs feh playerctl wget steam nodejs npm power-profiles-daemon noto-fonts-cjk gammastep network-manager-applet gvfs xarchiver nemo nemo-fileroller nemo-preview nemo-share godot fuzzel mako gnome-keyring rust rust-analyzer helix gtk4 libadwaita python-pip
 
     echo 'Installing AUR packages'
     yay -S sddm-git
@@ -47,8 +47,9 @@ setup_hyprland() {
     yay -S visual-studio-code-bin
     yay -S waybar-hyprland-git
     yay -S wlogout
-    yay -S bibata-cursor-theme
+    yay -S dracula-cursors-git
     yay -S hyprpaper-git
+    yay -S dracula-gtk-theme
 
     echo 'Enabling services'
     sudo systemctl enable power-profiles-daemon.service

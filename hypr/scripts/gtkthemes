@@ -2,10 +2,10 @@
 
 ## Set GTK Themes, Icons, Cursor and Fonts
 
-THEME='Arc-Dark'
+THEME='Dracula'
 ICONS='candy-icons'
 FONT='JetBrainsMono Nerd Font 14'
-CURSOR='Bibata-Modern-Ice'
+CURSOR='Dracula'
 
 SCHEMA='gsettings set org.gnome.desktop.interface'
 
