@@ -1,9 +1,9 @@
 # dotfiles
 
-## Arch set with Nvidia and Hyprland
+## Setup new Arch installation
 
 - Run `setup` to install packages and setup config
 
 ## Screenshot
 
-![This is an image](./screenshot.png)
+![screenshot](./screenshot.png)
