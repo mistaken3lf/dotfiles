@@ -1,46 +1,54 @@
 * {
   font-family: "JetBrainsMono Nerd Font";
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
 }
 
 window#waybar {
-  opacity: 0.8;
-  background-color: #111827;
   color: #ffffff;
-  transition-property: background-color;
-  transition-duration: 0.5s;
-  border-radius: 15px;
+  background-color: #1e2030;
+  border-radius: 20px;
 }
 
-window#waybar.hidden {
-  opacity: 0.2;
-}
-
-button {
-  box-shadow: inset 0 -3px transparent;
-  border: none;
-  font-weight: bold;
+#workspaces {
+  background-color: transparent;
   margin-top: 5px;
   margin-bottom: 5px;
-}
-
-button:hover {
-  color: #c33ee8;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 #workspaces button {
-  padding: 0 5px;
-  background-color: transparent;
-  color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.116) 2 2 5 2px;
+  background-color: #d0bc9d;
+  border-radius: 15px;
+  margin-right: 10px;
+  font-weight: bolder;
+  color: #32302f;
 }
 
-#workspaces button:hover {
-  color: #c33ee8;
+#workspaces button.active {
+  padding-right: 15px;
+  box-shadow: rgba(0, 0, 0, 0.288) 2 2 5 2px;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.377);
+  padding-left: 15px;
+  padding-bottom: 3px;
+  background: linear-gradient(45deg, #ffaec1, #d3869b);
+  animation: gradient 40s ease infinite;
+  background-size: 300% 300%;
+  color: #fdf1d5;
 }
 
-#workspaces button.urgent {
-  color: #eb4d4b;
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 #clock,
@@ -52,39 +60,72 @@ button:hover {
 #backlight,
 #network,
 #pulseaudio,
-#wireplumber,
+#custom-media,
 #tray,
 #mode,
-#idle_inhibitor {
-  padding: 3px 10px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+#idle_inhibitor,
+#custom-expand,
+#custom-cycle_wall,
+#custom-ss,
+#custom-dynamic_pill,
+#mpd {
+  padding: 0 10px;
+  border-radius: 15px;
+  background-color: #cdd6f4;
+  color: #516079;
+  box-shadow: rgba(0, 0, 0, 0.116) 2 2 5 2px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
 }
 
-#window,
-#workspaces {
-  margin: 0 4px;
+#custom-cycle_wall {
+  background: #d0bc9d;
+  color: #fff;
+  background-size: 500% 500%;
+  font-weight: bolder;
+  padding: 5px;
+  border-radius: 15px;
+}
+
+#clock {
+  background: linear-gradient(45deg, #689d6a, #8ec07c);
+  color: #ebdbb2;
+  background-size: 300% 300%;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.577);
+  animation: gradient 20s ease infinite;
+  font-size: 18px;
+  padding-top: 2px;
+  padding-right: 21px;
+  font-weight: bolder;
+  padding-left: 20px;
 }
 
 #battery.charging,
 #battery.plugged {
-  color: #26a65b;
+  background-color: #a6ddd4;
+  color: #32302f;
+}
+
+#battery {
+  background-color: #fff;
+  color: rgb(133, 192, 166);
+  font-weight: bolder;
+  font-size: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 @keyframes blink {
   to {
-    color: #ffffff;
+    background-color: #f9e2af;
+    color: #96804e;
   }
 }
 
-#battery.warning:not(.charging) {
-  color: #f53c3c;
-  background: transparent;
-}
-
 #battery.critical:not(.charging) {
-  color: #f53c3c;
-  background: transparent;
+  background-color: #f38ba8;
+  color: #bf5673;
   animation-name: blink;
   animation-duration: 0.5s;
   animation-timing-function: linear;
@@ -92,18 +133,97 @@ button:hover {
   animation-direction: alternate;
 }
 
+#cpu {
+  background: #458588;
+  background-size: 300% 300%;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.377);
+  color: #ebdbb2;
+}
+
+#memory {
+  background-color: #fecb53;
+  color: #32302f;
+  font-weight: bolder;
+}
+
+#disk {
+  color: #964b00;
+}
+
+#backlight {
+  color: #90b1b1;
+}
+
+#network {
+  color: rgb(74, 77, 75);
+  font-weight: bolder;
+}
+
+#network.disabled {
+  background-color: #45475a;
+}
+
+#network.disconnected {
+  background: rgb(243, 139, 168);
+  background: linear-gradient(
+    45deg,
+    rgba(243, 139, 168, 1) 0%,
+    rgba(250, 179, 135, 1) 100%
+  );
+  color: #fff;
+  font-weight: bolder;
+  padding-top: 3px;
+  padding-right: 11px;
+}
+
+#network.linked,
+#network.wifi {
+  background-color: #8ec07c;
+  color: #32302f;
+}
+
+#network.ethernet {
+  background-color: #f9e2af;
+}
+
+#pulseaudio {
+  background-color: #fab387;
+  color: #bf7d54;
+  font-weight: bolder;
+}
+
+#pulseaudio.muted {
+  background-color: #90b1b1;
+}
+
+#custom-media {
+  color: #66cc99;
+}
+
+#custom-media.custom-spotify {
+  background-color: #66cc99;
+}
+
+#custom-media.custom-vlc {
+  background-color: #ffa000;
+}
+
+#temperature {
+  background-color: #f9e2af;
+  color: #96804e;
+}
+
 #temperature.critical {
-  color: #eb4d4b;
+  background-color: #f38ba8;
+  color: #bf5673;
+}
+
+#tray {
+  background-color: #d3869b;
 }
 
 #tray > .passive {
   -gtk-icon-effect: dim;
-}
-
-#tray {
-  padding-right: 0;
-  padding-left: 0;
-  margin: 0;
 }
 
 #tray > .needs-attention {
@@ -111,11 +231,17 @@ button:hover {
   background-color: #eb4d4b;
 }
 
+#idle_inhibitor {
+  background-color: #2d3436;
+}
+
 #idle_inhibitor.activated {
-  color: #ffffff;
+  background-color: #ecf0f1;
+  color: #2d3436;
 }
 
 #language {
+  background: #00b093;
   color: #740864;
   padding: 0 5px;
   margin: 0 5px;
@@ -123,6 +249,7 @@ button:hover {
 }
 
 #keyboard-state {
+  background: #97e1ad;
   color: #000000;
   padding: 0 0px;
   margin: 0 5px;
@@ -137,19 +264,11 @@ button:hover {
   background: rgba(0, 0, 0, 0.2);
 }
 
-#idle_inhibitor {
-  padding-right: 0px;
-  margin-right: 0px;
-}
-
-#clock {
-  padding-right: 0px;
-  margin-right: 0px;
-}
-
 #custom-power {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-right: 5px;
-  color: #ff4b45;
+  background-color: #ed8796;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  border-radius: 15px;
+  padding-right: 3px;
 }
