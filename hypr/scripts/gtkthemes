@@ -1,11 +1,9 @@
 #!/bin/bash
 
-## Set GTK Themes, Icons, Cursor and Fonts
-
-THEME='Dracula'
+THEME='Adwaita-dark'
 ICONS='candy-icons'
 FONT='JetBrainsMono Nerd Font 14'
-CURSOR='Dracula'
+CURSOR='Adwaita'
 
 SCHEMA='gsettings set org.gnome.desktop.interface'
 
@@ -14,6 +12,7 @@ apply_themes() {
 	${SCHEMA} icon-theme "$ICONS"
 	${SCHEMA} cursor-theme "$CURSOR"
 	${SCHEMA} font-name "$FONT"
+	${SCHEMA} color-scheme prefer-dark
 }
 
 apply_themes
