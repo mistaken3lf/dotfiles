@@ -35,7 +35,61 @@ setup_yay() {
 
 setup_hyprland() {
     echo 'Installing requested packages'
-    yay -S acpilight blueman bluez bluez-utils swappy firefox foot grim wireplumber linux-headers make neofetch nvidia-dkms pamixer pavucontrol polkit-gnome qt6-wayland qt6ct slurp swayidle swaylock ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wl-clipboard xdg-user-dirs feh playerctl wget steam nodejs npm power-profiles-daemon noto-fonts-cjk gammastep network-manager-applet gvfs xarchiver godot fuzzel mako gnome-keyring rust rust-analyzer helix gtk4 libadwaita python-pip wofi zig zls vala gnome-themes-extra nautilus
+    yay -S acpilight \
+    blueman \
+    bluez \
+    bluez-utils \
+    swappy \
+    firefox \
+    foot \
+    grim \
+    wireplumber \
+    linux-headers \
+    make \
+    hyfetch \
+    nvidia-dkms \
+    pamixer \
+    pavucontrol \
+    polkit-gnome \
+    qt6-wayland \
+    qt6ct \
+    slurp \
+    swayidle \
+    swaylock \
+    ttf-jetbrains-mono-nerd \
+    ttf-nerd-fonts-symbols-2048-em \
+    wl-clipboard \
+    xdg-user-dirs \
+    feh \
+    playerctl \
+    wget \
+    steam \
+    nodejs \
+    npm \
+    power-profiles-daemon \
+    noto-fonts-cjk \
+    gammastep \
+    network-manager-applet \
+    gvfs \
+    xarchiver \
+    godot \
+    fuzzel \
+    mako \
+    gnome-keyring \
+    rust \
+    rust-analyzer \
+    helix \
+    gtk4 \
+    libadwaita \
+    python-pip \
+    wofi \
+    zig \
+    zls \
+    vala \
+    gnome-themes-extra \
+    nautilus \
+    meson \
+    ninja
 
     echo 'Installing AUR packages'
     yay -S sddm-git
@@ -47,6 +101,7 @@ setup_hyprland() {
     yay -S libva-nvidia-driver
     yay -S visual-studio-code-bin
     yay -S waybar-hyprland-git
+    yay -S vala-language-server
 
     echo 'Enabling services'
     sudo systemctl enable power-profiles-daemon.service

@@ -30,4 +30,4 @@ alias hx='helix'
 export PS1='\[\e[\033[01;34m\]\u@\h \[\e[38;5;211m\]\W\[\e[\033[38;5;48m\] $(parse_git_branch)\[\e[\033[00m\]\$ '
 
 # Programs to run on startup
-neofetch
+hyfetch
