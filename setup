@@ -89,7 +89,8 @@ setup_hyprland() {
     gnome-themes-extra \
     nautilus \
     meson \
-    ninja
+    ninja \
+    uncrustify \
 
     echo 'Installing AUR packages'
     yay -S sddm-git
