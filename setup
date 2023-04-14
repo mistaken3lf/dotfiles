@@ -60,7 +60,6 @@ setup_hyprland() {
     ttf-nerd-fonts-symbols-2048-em \
     wl-clipboard \
     xdg-user-dirs \
-    feh \
     playerctl \
     wget \
     steam \
