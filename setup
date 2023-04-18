@@ -52,7 +52,6 @@ setup_hyprland() {
     pavucontrol \
     polkit-gnome \
     qt6-wayland \
-    qt6ct \
     slurp \
     swayidle \
     swaylock \
