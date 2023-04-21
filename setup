@@ -100,7 +100,6 @@ setup_hyprland() {
     visual-studio-code-bin \
     waybar-hyprland-git \
     vala-language-server \
-    redshift-wayland-git \
 
     echo 'Enabling services'
     sudo systemctl enable power-profiles-daemon.service
@@ -117,7 +116,6 @@ setup_hyprland() {
     cp -r ./mako ~/.config
     cp -r ./waybar ~/.config
     cp -r ./helix ~/.config
-    cp -r ./gammastep ~/.config
 }
 
 setup_kde() {
