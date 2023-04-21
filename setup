@@ -66,7 +66,6 @@ setup_hyprland() {
     npm \
     power-profiles-daemon \
     noto-fonts-cjk \
-    gammastep \
     network-manager-applet \
     gvfs \
     xarchiver \
@@ -91,16 +90,17 @@ setup_hyprland() {
     uncrustify \
 
     echo 'Installing AUR packages'
-    yay -S sddm-git
-    yay -S hyprland-git
-    yay -S xdg-desktop-portal-hyprland-git
-    yay -S hyprpaper-git
-    yay -S candy-icons-git
-    yay -S hyprpicker-git
-    yay -S libva-nvidia-driver
-    yay -S visual-studio-code-bin
-    yay -S waybar-hyprland-git
-    yay -S vala-language-server
+    yay -S sddm-git \
+    hyprland-git \
+    xdg-desktop-portal-hyprland-git \
+    hyprpaper-git \
+    candy-icons-git \
+    hyprpicker-git \
+    libva-nvidia-driver \
+    visual-studio-code-bin \
+    waybar-hyprland-git \
+    vala-language-server \
+    redshift-wayland-git \
 
     echo 'Enabling services'
     sudo systemctl enable power-profiles-daemon.service
