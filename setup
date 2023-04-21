@@ -88,12 +88,12 @@ setup_hyprland() {
     meson \
     ninja \
     uncrustify \
+    hyprland \
+    xdg-desktop-portal-hyprland \
+    hyprpaper \
 
     echo 'Installing AUR packages'
     yay -S sddm-git \
-    hyprland-git \
-    xdg-desktop-portal-hyprland-git \
-    hyprpaper-git \
     candy-icons-git \
     hyprpicker-git \
     libva-nvidia-driver \
