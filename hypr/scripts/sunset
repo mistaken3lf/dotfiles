@@ -1,7 +1,0 @@
-#!/usr/bin/bash
-
-if pidof redshift; then
-   killall -9 redshift
-else
-   redshift -O 3500
-fi
