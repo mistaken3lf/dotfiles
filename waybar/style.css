@@ -151,7 +151,7 @@ window#waybar {
 }
 
 #backlight {
-  color: #90b1b1;
+  color: #566a6a;
 }
 
 #network {
@@ -188,7 +188,7 @@ window#waybar {
 
 #pulseaudio {
   background-color: #fab387;
-  color: #bf7d54;
+  color: #85573a;
   font-weight: bolder;
 }
 
@@ -233,6 +233,7 @@ window#waybar {
 
 #idle_inhibitor {
   background-color: #2d3436;
+  color: #858fa1;
 }
 
 #idle_inhibitor.activated {
