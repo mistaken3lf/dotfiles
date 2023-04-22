@@ -89,8 +89,11 @@ setup_hyprland() {
     ninja \
     uncrustify \
     hyprland \
+    xdg-desktop-portal-gtk \
     xdg-desktop-portal-hyprland \
     hyprpaper \
+    flatpak \
+    flatpak-builder \
 
     echo 'Installing AUR packages'
     yay -S sddm-git \
