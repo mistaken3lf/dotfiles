@@ -56,7 +56,7 @@ setup_hyprland() {
     swayidle \
     swaylock \
     ttf-jetbrains-mono-nerd \
-    ttf-nerd-fonts-symbols-2048-em \
+    ttf-nerd-fonts-symbols \
     wl-clipboard \
     xdg-user-dirs \
     playerctl \
@@ -88,10 +88,7 @@ setup_hyprland() {
     meson \
     ninja \
     uncrustify \
-    hyprland \
     xdg-desktop-portal-gtk \
-    xdg-desktop-portal-hyprland \
-    hyprpaper \
     flatpak \
     flatpak-builder \
 
@@ -103,6 +100,10 @@ setup_hyprland() {
     visual-studio-code-bin \
     waybar-hyprland-git \
     vala-language-server \
+    hyprland-git \
+    xdg-desktop-portal-hyprland-git \
+    hyprpaper-git \
+    pikture-git \
 
     echo 'Enabling services'
     sudo systemctl enable power-profiles-daemon.service
