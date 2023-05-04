@@ -88,7 +88,6 @@ setup_hyprland() {
     meson \
     ninja \
     uncrustify \
-    xdg-desktop-portal-gtk \
     flatpak \
     flatpak-builder \
 

@@ -3,7 +3,8 @@
 THEME='Adwaita-dark'
 ICONS='candy-icons'
 FONT='JetBrainsMono Nerd Font 14'
-CURSOR='Adwaita'
+CURSOR='Adwaita-dark'
+COLOR_SCHEME='prefer-dark'
 
 SCHEMA='gsettings set org.gnome.desktop.interface'
 
@@ -12,7 +13,7 @@ apply_themes() {
 	${SCHEMA} icon-theme "$ICONS"
 	${SCHEMA} cursor-theme "$CURSOR"
 	${SCHEMA} font-name "$FONT"
-	${SCHEMA} color-scheme prefer-dark
+	${SCHEMA} color-scheme "$COLOR_SCHEME"
 }
 
 apply_themes
