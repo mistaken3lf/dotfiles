@@ -90,6 +90,7 @@ setup_hyprland() {
     uncrustify \
     flatpak \
     flatpak-builder \
+    xdg-desktop-portal-gtk \
 
     echo 'Installing AUR packages'
     yay -S sddm-git \
