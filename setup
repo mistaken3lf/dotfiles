@@ -124,7 +124,21 @@ setup_hyprland() {
 
 setup_kde() {
     echo 'Installing requested packages'
-    yay -S firefox linux-headers make neofetch nvidia-dkms ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols-2048-em wget steam nodejs npm noto-fonts-cjk godot packagekit-qt5 helix 
+    yay -S firefox \
+    linux-headers \
+    make \
+    hyfetch \
+    nvidia-dkms \
+    ttf-jetbrains-mono-nerd \
+    ttf-nerd-fonts-symbols \
+    wget \
+    steam \
+    nodejs \
+    npm \
+    noto-fonts-cjk \
+    godot \
+    packagekit-qt5 \
+    helix \
 
     echo 'Installing AUR packages'
     yay -S sddm-git
@@ -132,6 +146,52 @@ setup_kde() {
 
     echo 'Enabling services'
     sudo systemctl enable bluetooth.service
+
+    echo 'Copying config files'
+    cp -r ./helix ~/.config
+}
+
+setup_gnome() {
+    echo 'Installing requested packages'
+    yay -S firefox \
+    linux-headers \
+    make hyfetch \
+    nvidia-dkms \
+    ttf-jetbrains-mono-nerd \
+    ttf-nerd-fonts-symbols \
+    wget \
+    steam \
+    nodejs \
+    npm \
+    noto-fonts-cjk \
+    godot \
+    power-profiles-daemon \
+    rust \
+    rust-analyzer \
+    helix \
+    gtk4 \
+    libadwaita \
+    python-pip \
+    zig \
+    zls \
+    vala \
+    gnome-themes-extra \
+    meson \
+    ninja \
+    uncrustify \
+    flatpak \
+    flatpak-builder \
+
+    echo 'Installing AUR packages'
+    yay -S visual-studio-code-bin \
+    vala-language-server \
+
+    echo 'Enabling services'
+    sudo systemctl enable bluetooth.service
+    sudo systemctl enable power-profiles-daemon.service
+
+    echo 'Copying config files'
+    cp -r ./helix ~/.config
 }
 
 setup_nvidia() {
@@ -181,6 +241,11 @@ main() {
     read -p "Do you want to setup kde packages (Y/N)?" kde
     if [ $kde == 'Y' ] || [ $kde == 'y' ]; then
         setup_kde
+    fi
+
+    read -p "Do you want to setup gnome packages (Y/N)?" gnome
+    if [ $gnome == 'Y' ] || [ $gnome == 'y' ]; then
+        setup_gnome
     fi
 
     read -p "Do you want to setup nvidia drivers (Y/N)?" nvidia
