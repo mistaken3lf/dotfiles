@@ -90,6 +90,7 @@ setup_hyprland() {
     flatpak \
     flatpak-builder \
     xdg-desktop-portal-gtk \
+    raylib \
 
     echo 'Installing AUR packages'
     yay -S sddm-git \
