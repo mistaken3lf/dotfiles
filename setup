@@ -46,7 +46,7 @@ setup_hyprland() {
     wireplumber \
     linux-headers \
     make \
-    hyfetch \
+    neofetch \
     nvidia-dkms \
     pamixer \
     pavucontrol \
