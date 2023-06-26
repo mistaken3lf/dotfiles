@@ -91,10 +91,10 @@ setup_hyprland() {
     flatpak-builder \
     xdg-desktop-portal-gtk \
     raylib \
+    sddm \
 
     echo 'Installing AUR packages'
-    yay -S sddm-git \
-    candy-icons-git \
+    yay -S candy-icons-git \
     hyprpicker-git \
     libva-nvidia-driver \
     visual-studio-code-bin \
