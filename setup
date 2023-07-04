@@ -91,7 +91,6 @@ setup_hyprland() {
     flatpak-builder \
     xdg-desktop-portal-gtk \
     raylib \
-    sddm \
 
     echo 'Installing AUR packages'
     yay -S candy-icons-git \
@@ -104,6 +103,7 @@ setup_hyprland() {
     xdg-desktop-portal-hyprland-git \
     hyprpaper-git \
     pikture-git \
+    sddm-git \
 
     echo 'Enabling services'
     sudo systemctl enable power-profiles-daemon.service
