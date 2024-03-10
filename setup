@@ -119,79 +119,54 @@ setup_hyprland() {
     cp -r ./hypr ~/.config
     cp -r ./mako ~/.config
     cp -r ./waybar ~/.config
-    cp -r ./helix ~/.config
+    cp -r ./nvim ~/.config
 }
 
 setup_kde() {
     echo 'Installing requested packages'
-    yay -S firefox \
+    yay -S chromium \
     linux-headers \
     make \
-    hyfetch \
-    nvidia-dkms \
-    ttf-jetbrains-mono-nerd \
     ttf-nerd-fonts-symbols \
     wget \
     steam \
     nodejs \
     npm \
     noto-fonts-cjk \
-    godot \
-    packagekit-qt5 \
-    helix \
+    otf-monaspace-nerd \
+    neovim \
 
     echo 'Installing AUR packages'
-    yay -S sddm-git
     yay -S visual-studio-code-bin
 
     echo 'Enabling services'
     sudo systemctl enable bluetooth.service
 
-    echo 'Copying config files'
-    cp -r ./helix ~/.config
+    echo 'Settings up neovim'
+    cp -r ./nvim ~/.config
 }
 
 setup_gnome() {
     echo 'Installing requested packages'
-    yay -S firefox \
+    yay -S chromium \
     linux-headers \
-    make hyfetch \
     nvidia-dkms \
-    ttf-jetbrains-mono-nerd \
     ttf-nerd-fonts-symbols \
+    otf-monaspace-nerd \
     wget \
     steam \
     nodejs \
     npm \
     noto-fonts-cjk \
-    godot \
     power-profiles-daemon \
-    rust \
-    rust-analyzer \
-    helix \
-    gtk4 \
-    libadwaita \
-    python-pip \
-    zig \
-    zls \
-    vala \
     gnome-themes-extra \
-    meson \
-    ninja \
-    uncrustify \
-    flatpak \
-    flatpak-builder \
 
     echo 'Installing AUR packages'
     yay -S visual-studio-code-bin \
-    vala-language-server \
 
     echo 'Enabling services'
     sudo systemctl enable bluetooth.service
     sudo systemctl enable power-profiles-daemon.service
-
-    echo 'Copying config files'
-    cp -r ./helix ~/.config
 }
 
 setup_nvidia() {
@@ -205,9 +180,6 @@ setup_nvidia() {
     BINARIES=(/usr/bin/btrfs)
     FILES=()
     HOOKS=(base udev autodetect keyboard keymap modconf block filesystems fsck)" | sudo tee /etc/mkinitcpio.conf
-
-    echo 'Setup nvidia systemd-boot'
-    sudo sed -i "s/rootfstype=btrfs/& cow_spacesize=10G copytoram=n nvidia nvidia-drm.modeset=1 nouveau.modeset=0 i915.modeset=1 radeon.modeset=1 nvme_load=yes module_blacklist=pcspk/" /boot/loader/entries/*.conf
 }
 
 setup_bashrc() {
