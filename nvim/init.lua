@@ -33,7 +33,7 @@ vim.keymap.set("i", "jk", "<Esc>")
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
+vim.keymap.set("n", "<leader>o", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
@@ -59,8 +59,13 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+	-- Sleuth
 	"tpope/vim-sleuth",
+
+	-- Comment Setup
 	{ "numToStr/Comment.nvim", opts = {} },
+
+	-- GIT Signs
 	{
 		"lewis6991/gitsigns.nvim",
 		opts = {
@@ -73,6 +78,8 @@ require("lazy").setup({
 			},
 		},
 	},
+
+	-- Which Key
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
@@ -84,11 +91,21 @@ require("lazy").setup({
 				["<leader>k"] = { "<cmd>bdelete<CR>", "Kill Buffer" },
 				["<leader>p"] = { "<cmd>Lazy<CR>", "Plugin Manager" },
 				["<leader>q"] = { "<cmd>wqall!<CR>", "Quit" },
-				["<leader>a"] = { "<C-w>w", "Switch to next window" },
+				["<leader>]"] = { "<C-w>w", "Switch to next window" },
+				["<leader>["] = { "<C-w>w", "Switch to previous window" },
 				["<leader>m"] = { "<cmd>Mason<CR>", "Mason LSP" },
+				["<leader>t"] = { "<cmd>TroubleToggle<CR>", "Trouble" },
 			})
 		end,
 	},
+
+	-- Trouble
+	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
+
+	-- Telescope
 	{
 		"nvim-telescope/telescope.nvim",
 		event = "VeryLazy",
@@ -115,6 +132,7 @@ require("lazy").setup({
 					},
 				},
 			})
+
 			pcall(require("telescope").load_extension, "fzf")
 			pcall(require("telescope").load_extension, "ui-select")
 
@@ -218,7 +236,7 @@ require("lazy").setup({
 			require("mason").setup()
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
-				"stylua", -- Used to format lua code
+				"stylua",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 			require("mason-lspconfig").setup({
@@ -236,6 +254,7 @@ require("lazy").setup({
 			})
 		end,
 	},
+
 	-- Autoformatting
 	{
 		"stevearc/conform.nvim",
@@ -248,6 +267,7 @@ require("lazy").setup({
 			formatters_by_ft = {
 				lua = { "stylua" },
 				javascript = { { "prettierd", "prettier" } },
+				typescript = { { "prettierd", "prettier" } },
 			},
 		},
 	},
@@ -299,16 +319,16 @@ require("lazy").setup({
 					end,
 					["<Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
-						  local entries = cmp.get_entries()
-						  cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-				  
-						  if #entries == 1 then
-							cmp.confirm()
-						  end
+							local entries = cmp.get_entries()
+							cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+
+							if #entries == 1 then
+								cmp.confirm()
+							end
 						else
-						  fallback()
+							fallback()
 						end
-					  end, { "i", "s" }),
+					end, { "i", "s" }),
 				}),
 				sources = {
 					{ name = "nvim_lsp" },
@@ -318,6 +338,8 @@ require("lazy").setup({
 			})
 		end,
 	},
+
+	-- Theme
 	{
 		"sainnhe/everforest",
 		lazy = false,
@@ -327,7 +349,11 @@ require("lazy").setup({
 			vim.cmd.hi("Comment gui=none")
 		end,
 	},
+
+	-- TODO Comments
 	{ "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = { signs = false } },
+
+	-- MINI
 	{
 		"echasnovski/mini.nvim",
 		config = function()
@@ -353,6 +379,8 @@ require("lazy").setup({
 			})
 		end,
 	},
+
+	-- File tree
 	{
 		"nvim-tree/nvim-tree.lua",
 		config = function()
@@ -371,5 +399,5 @@ require("lazy").setup({
 				},
 			})
 		end,
-	}
+	},
 })
