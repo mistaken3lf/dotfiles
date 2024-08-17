@@ -41,6 +41,12 @@ vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right win
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
+vim.filetype.add({
+	pattern = {
+		[".*%.component%.html"] = "htmlangular",
+	},
+})
+
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
@@ -85,16 +91,24 @@ require("lazy").setup({
 		event = "VeryLazy",
 		config = function()
 			require("which-key").setup()
-			require("which-key").register({
-				["<leader>e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
-				["<leader>w"] = { "<cmd>w!<CR>", "Save" },
-				["<leader>k"] = { "<cmd>bdelete<CR>", "Kill Buffer" },
-				["<leader>p"] = { "<cmd>Lazy<CR>", "Plugin Manager" },
-				["<leader>q"] = { "<cmd>wqall!<CR>", "Quit" },
-				["<leader>]"] = { "<C-w>w", "Switch to next window" },
-				["<leader>["] = { "<C-w>w", "Switch to previous window" },
-				["<leader>m"] = { "<cmd>Mason<CR>", "Mason LSP" },
-				["<leader>t"] = { "<cmd>TroubleToggle<CR>", "Trouble" },
+			require("which-key").add({
+				{ "<leader>[", "<C-w>w", desc = "Switch to previous window" },
+				{ "<leader>]", "<C-w>w", desc = "Switch to next window" },
+				{ "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Explorer" },
+				{ "<leader>k", "<cmd>bdelete<CR>", desc = "Kill Buffer" },
+				{ "<leader>m", "<cmd>Mason<CR>", desc = "Mason LSP" },
+				{ "<leader>p", "<cmd>Lazy<CR>", desc = "Plugin Manager" },
+				{ "<leader>q", "<cmd>wqall!<CR>", desc = "Quit" },
+				{ "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
+				{ "<leader>w", "<cmd>w<CR>", desc = "Save" },
+				{ "<leader>lg", "<cmd>LazyGit<CR>", desc = "Lazy Git" },
+				{
+					"<leader>b",
+					group = "buffers",
+					expand = function()
+						return require("which-key.extras").expand.buf()
+					end,
+				},
 			})
 		end,
 	},
@@ -102,13 +116,60 @@ require("lazy").setup({
 	-- Trouble
 	{
 		"folke/trouble.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
+		cmd = "Trouble",
+		keys = {
+			{
+				"<leader>xx",
+				"<cmd>Trouble diagnostics toggle<cr>",
+				desc = "Diagnostics (Trouble)",
+			},
+			{
+				"<leader>xX",
+				"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+				desc = "Buffer Diagnostics (Trouble)",
+			},
+			{
+				"<leader>cs",
+				"<cmd>Trouble symbols toggle focus=false<cr>",
+				desc = "Symbols (Trouble)",
+			},
+			{
+				"<leader>cl",
+				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+				desc = "LSP Definitions / references / ... (Trouble)",
+			},
+			{
+				"<leader>xL",
+				"<cmd>Trouble loclist toggle<cr>",
+				desc = "Location List (Trouble)",
+			},
+			{
+				"<leader>xQ",
+				"<cmd>Trouble qflist toggle<cr>",
+				desc = "Quickfix List (Trouble)",
+			},
+		},
+	},
+
+	-- LazyGit
+	{
+		"kdheepak/lazygit.nvim",
+		cmd = {
+			"LazyGit",
+			"LazyGitConfig",
+			"LazyGitCurrentFile",
+			"LazyGitFilter",
+			"LazyGitFilterCurrentFile",
+		},
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
 	},
 
 	-- Telescope
-	{
+	{ -- Fuzzy Finder (files, lsp, etc)
 		"nvim-telescope/telescope.nvim",
-		event = "VeryLazy",
+		event = "VimEnter",
 		branch = "0.1.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
@@ -120,12 +181,10 @@ require("lazy").setup({
 				end,
 			},
 			{ "nvim-telescope/telescope-ui-select.nvim" },
+			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 		},
 		config = function()
 			require("telescope").setup({
-				defaults = {
-					file_ignore_patterns = { ".git/", "node%_modules/.*", "dist/.*" },
-				},
 				extensions = {
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown(),
@@ -137,7 +196,6 @@ require("lazy").setup({
 			pcall(require("telescope").load_extension, "ui-select")
 
 			local builtin = require("telescope.builtin")
-
 			vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
 			vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
 			vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
@@ -171,13 +229,26 @@ require("lazy").setup({
 
 	-- LSP Setup
 	{
+		"folke/lazydev.nvim",
+		ft = "lua",
+		opts = {
+			library = {
+				{ path = "luvit-meta/library", words = { "vim%.uv" } },
+			},
+		},
+	},
+	{ "Bilal2453/luvit-meta", lazy = true },
+
+	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
-			"williamboman/mason.nvim",
+			{ "williamboman/mason.nvim", config = true },
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			{ "j-hui/fidget.nvim", opts = {} },
+			"hrsh7th/cmp-nvim-lsp",
 		},
+
 		config = function()
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
@@ -210,6 +281,14 @@ require("lazy").setup({
 						vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
 							buffer = event.buf,
 							callback = vim.lsp.buf.clear_references,
+						})
+
+						vim.api.nvim_create_autocmd("LspDetach", {
+							group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
+							callback = function(event2)
+								vim.lsp.buf.clear_references()
+								vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
+							end,
 						})
 					end
 				end,
@@ -258,16 +337,39 @@ require("lazy").setup({
 	-- Autoformatting
 	{
 		"stevearc/conform.nvim",
+		event = { "BufWritePre" },
+		cmd = { "ConformInfo" },
+		keys = {
+			{
+				"<leader>f",
+				function()
+					require("conform").format({ async = true, lsp_fallback = true })
+				end,
+				mode = "",
+				desc = "[F]ormat buffer",
+			},
+		},
 		opts = {
 			notify_on_error = false,
-			format_on_save = {
-				timeout_ms = 500,
-				lsp_fallback = true,
-			},
+			format_on_save = function(bufnr)
+				local disable_filetypes = { c = true, cpp = true }
+				return {
+					timeout_ms = 500,
+					lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+				}
+			end,
 			formatters_by_ft = {
 				lua = { "stylua" },
-				javascript = { { "prettierd", "prettier" } },
-				typescript = { { "prettierd", "prettier" } },
+				javascript = { "prettierd", "prettier", stop_after_first = true },
+				typescript = { "prettierd", "prettier", stop_after_first = true },
+				javascriptreact = { "prettierd" },
+				typescriptreact = { "prettierd" },
+				css = { "prettierd" },
+				html = { "prettierd" },
+				json = { "prettierd" },
+				yaml = { "prettierd" },
+				markdown = { "prettierd" },
+				graphql = { "prettierd" },
 			},
 		},
 	},
@@ -285,6 +387,7 @@ require("lazy").setup({
 					end
 					return "make install_jsregexp"
 				end)(),
+				dependencies = {},
 			},
 			"saadparwaiz1/cmp_luasnip",
 			"hrsh7th/cmp-nvim-lsp",
@@ -303,34 +406,28 @@ require("lazy").setup({
 				},
 				completion = { completeopt = "menu,menuone,noinsert" },
 				mapping = cmp.mapping.preset.insert({
-					["<Enter>"] = function(fallback)
-						if
-							not cmp.visible()
-							or not cmp.get_selected_entry()
-							or cmp.get_selected_entry().source.name == "nvim_lsp_signature_help"
-						then
-							fallback()
-						else
-							cmp.confirm({
-								behavior = cmp.ConfirmBehavior.Replace,
-								select = false,
-							})
+					["<C-n>"] = cmp.mapping.select_next_item(),
+					["<C-p>"] = cmp.mapping.select_prev_item(),
+					["<C-b>"] = cmp.mapping.scroll_docs(-4),
+					["<C-f>"] = cmp.mapping.scroll_docs(4),
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
+					["<C-Space>"] = cmp.mapping.complete({}),
+					["<C-l>"] = cmp.mapping(function()
+						if luasnip.expand_or_locally_jumpable() then
+							luasnip.expand_or_jump()
 						end
-					end,
-					["<Tab>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							local entries = cmp.get_entries()
-							cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-
-							if #entries == 1 then
-								cmp.confirm()
-							end
-						else
-							fallback()
+					end, { "i", "s" }),
+					["<C-h>"] = cmp.mapping(function()
+						if luasnip.locally_jumpable(-1) then
+							luasnip.jump(-1)
 						end
 					end, { "i", "s" }),
 				}),
 				sources = {
+					{
+						name = "lazydev",
+						group_index = 0,
+					},
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
 					{ name = "path" },
@@ -350,7 +447,7 @@ require("lazy").setup({
 		end,
 	},
 
-	-- TODO Comments
+	-- Comments
 	{ "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = { signs = false } },
 
 	-- MINI
@@ -359,8 +456,11 @@ require("lazy").setup({
 		config = function()
 			require("mini.ai").setup({ n_lines = 500 })
 			require("mini.surround").setup()
-			require("mini.statusline").setup()
-			MiniStatusline.section_location = function()
+			local statusline = require("mini.statusline")
+			statusline.setup({ use_icons = vim.g.have_nerd_font })
+
+			---@diagnostic disable-next-line: duplicate-set-field
+			statusline.section_location = function()
 				return "%2l:%-2v"
 			end
 		end,
@@ -370,13 +470,30 @@ require("lazy").setup({
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
-		config = function()
-			require("nvim-treesitter.configs").setup({
-				ensure_installed = { "bash", "c", "html", "lua", "markdown", "vim", "vimdoc", "go" },
-				auto_install = true,
-				highlight = { enable = true },
-				indent = { enable = true },
-			})
+		opts = {
+			ensure_installed = {
+				"bash",
+				"c",
+				"diff",
+				"html",
+				"lua",
+				"luadoc",
+				"markdown",
+				"markdown_inline",
+				"query",
+				"vim",
+				"vimdoc",
+			},
+			auto_install = true,
+			highlight = {
+				enable = true,
+				additional_vim_regex_highlighting = { "ruby" },
+			},
+			indent = { enable = true, disable = { "ruby" } },
+		},
+		config = function(_, opts)
+			---@diagnostic disable-next-line: missing-fields
+			require("nvim-treesitter.configs").setup(opts)
 		end,
 	},
 
@@ -389,13 +506,16 @@ require("lazy").setup({
 					sorter = "case_sensitive",
 				},
 				view = {
-					width = 30,
+					width = 70,
 				},
 				renderer = {
 					group_empty = true,
 				},
 				filters = {
 					dotfiles = true,
+				},
+				update_focused_file = {
+					enable = true,
 				},
 			})
 		end,
