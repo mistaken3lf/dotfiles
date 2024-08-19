@@ -34,15 +34,6 @@ config.colors = {
 	},
 }
 
-config.tab_bar_style = {
-	window_hide = window_min,
-	window_hide_hover = window_min,
-	window_maximize = window_max,
-	window_maximize_hover = window_max,
-	window_close = window_close,
-	window_close_hover = window_close,
-}
-
 config.tab_max_width = 100
 config.use_fancy_tab_bar = false
 

@@ -41,6 +41,7 @@ vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right win
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
+-- Angular Highlighting
 vim.filetype.add({
 	pattern = {
 		[".*%.component%.html"] = "htmlangular",
@@ -71,6 +72,27 @@ require("lazy").setup({
 	-- Comment Setup
 	{ "numToStr/Comment.nvim", opts = {} },
 
+	-- Git Conflicts
+	{ "akinsho/git-conflict.nvim", version = "*", config = true },
+
+	-- Package.json package info
+	{
+		"vuki656/package-info.nvim",
+		dependencies = { "MunifTanjim/nui.nvim" },
+		ft = "json",
+		opts = {
+			colors = {
+				up_to_date = "#0DB9D7",
+				outdated = "#d19a66",
+			},
+		},
+		config = function(_, opts)
+			require("package-info").setup(opts)
+			vim.cmd([[highlight PackageInfoUpToDateVersion guifg=]] .. opts.colors.up_to_date)
+			vim.cmd([[highlight PackageInfoOutdatedVersion guifg=]] .. opts.colors.outdated)
+		end,
+	},
+
 	-- GIT Signs
 	{
 		"lewis6991/gitsigns.nvim",
@@ -99,9 +121,10 @@ require("lazy").setup({
 				{ "<leader>m", "<cmd>Mason<CR>", desc = "Mason LSP" },
 				{ "<leader>p", "<cmd>Lazy<CR>", desc = "Plugin Manager" },
 				{ "<leader>q", "<cmd>wqall!<CR>", desc = "Quit" },
-				{ "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
 				{ "<leader>w", "<cmd>w<CR>", desc = "Save" },
 				{ "<leader>lg", "<cmd>LazyGit<CR>", desc = "Lazy Git" },
+				{ "<leader>h", "<cmd>bprev<cr>", desc = "Previous Buffer" },
+				{ "<leader>l", "<cmd>bnext<cr>", desc = "Next Buffer" },
 				{
 					"<leader>b",
 					group = "buffers",
@@ -116,6 +139,7 @@ require("lazy").setup({
 	-- Trouble
 	{
 		"folke/trouble.nvim",
+		opts = {},
 		cmd = "Trouble",
 		keys = {
 			{
@@ -167,7 +191,7 @@ require("lazy").setup({
 	},
 
 	-- Telescope
-	{ -- Fuzzy Finder (files, lsp, etc)
+	{
 		"nvim-telescope/telescope.nvim",
 		event = "VimEnter",
 		branch = "0.1.x",
@@ -190,6 +214,11 @@ require("lazy").setup({
 						require("telescope.themes").get_dropdown(),
 					},
 				},
+				defaults = {
+					file_ignore_patterns = {
+						"node_modules",
+					},
+				},
 			})
 
 			pcall(require("telescope").load_extension, "fzf")
@@ -197,9 +226,7 @@ require("lazy").setup({
 
 			local builtin = require("telescope.builtin")
 			vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
-			vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
 			vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
-			vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
 			vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
 			vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
 			vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
@@ -227,7 +254,7 @@ require("lazy").setup({
 		end,
 	},
 
-	-- LSP Setup
+	-- Lazy Dev
 	{
 		"folke/lazydev.nvim",
 		ft = "lua",
@@ -237,8 +264,11 @@ require("lazy").setup({
 			},
 		},
 	},
+
+	-- Luavit
 	{ "Bilal2453/luvit-meta", lazy = true },
 
+	-- LSP Setup
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
@@ -281,14 +311,6 @@ require("lazy").setup({
 						vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
 							buffer = event.buf,
 							callback = vim.lsp.buf.clear_references,
-						})
-
-						vim.api.nvim_create_autocmd("LspDetach", {
-							group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
-							callback = function(event2)
-								vim.lsp.buf.clear_references()
-								vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
-							end,
 						})
 					end
 				end,
@@ -370,6 +392,7 @@ require("lazy").setup({
 				yaml = { "prettierd" },
 				markdown = { "prettierd" },
 				graphql = { "prettierd" },
+				htmlangular = { "prettierd" },
 			},
 		},
 	},
