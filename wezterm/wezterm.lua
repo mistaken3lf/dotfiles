@@ -58,18 +58,6 @@ config.window_frame = {
 }
 
 wezterm.on("update-right-status", function(window, pane)
-	local user_vars = pane:get_user_vars()
-
-	local icon = user_vars.window_prefix
-	if not icon or icon == "" then
-		icon = ""
-	end
-
-	window:set_left_status(wezterm.format({
-		{ Background = { Color = "#333333" } },
-		{ Text = " " .. wezterm.pad_right(icon, 3) },
-	}))
-
 	local title = pane:get_title()
 	local date = " " .. wezterm.strftime("%H:%M %m-%d-%Y") .. " "
 
