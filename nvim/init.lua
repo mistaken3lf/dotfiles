@@ -294,7 +294,6 @@ later(function()
 			source_func = "omnifunc",
 			auto_setup = false,
 			process_items = function(items, base)
-				-- Don't show 'Text' and 'Snippet' suggestions
 				items = vim.tbl_filter(function(x)
 					return x.kind ~= 1 and x.kind ~= 15
 				end, items)
@@ -480,7 +479,7 @@ now(function()
 			sorter = "case_sensitive",
 		},
 		view = {
-			width = 70,
+			width = "25%",
 		},
 		renderer = {
 			group_empty = true,
@@ -618,7 +617,7 @@ later(function()
 						path = vim.split(package.path, ";"),
 					},
 					diagnostics = {
-						globals = { "vim", "describe", "it", "before_each", "after_each" },
+						globals = { "vim", "describe", "it", "before_each", "after_each", "MiniFiles", "MiniPick" },
 						disable = { "need-check-nil" },
 						workspaceDelay = -1,
 					},
