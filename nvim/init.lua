@@ -68,6 +68,8 @@ now(function()
 	vim.g.everforest_background = "hard"
 	vim.g.everforest_better_performance = 1
 	vim.opt.completeopt = "menu,menuone,noselect"
+	vim.opt.tabstop = 4
+	vim.opt.shiftwidth = 4
 end)
 
 -- Keymaps
