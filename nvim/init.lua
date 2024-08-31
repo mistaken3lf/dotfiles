@@ -20,13 +20,6 @@ local nmap_leader = function(suffix, rhs, desc, opts)
 	vim.keymap.set("n", "<Leader>" .. suffix, rhs, opts)
 end
 
--- Angular Highlighting
-vim.filetype.add({
-	pattern = {
-		[".*%.component%.html"] = "htmlangular",
-	},
-})
-
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
@@ -40,6 +33,13 @@ add({ name = "mini.nvim", checkout = "HEAD" })
 
 -- General settings
 now(function()
+	-- Angular Highlighting
+	vim.filetype.add({
+		pattern = {
+			[".*%.component%.html"] = "htmlangular",
+		},
+	})
+
 	vim.g.mapleader = " "
 	vim.g.maplocalleader = " "
 	vim.opt.number = true
@@ -65,8 +65,6 @@ now(function()
 	vim.g.loaded_netrw = 1
 	vim.g.loaded_netrwPlugin = 1
 	vim.opt.termguicolors = true
-	vim.g.everforest_background = "hard"
-	vim.g.everforest_better_performance = 1
 	vim.opt.completeopt = "menu,menuone,noselect"
 	vim.opt.tabstop = 4
 	vim.opt.shiftwidth = 4
@@ -90,25 +88,25 @@ now(function()
 	nmap_leader("]", "<C-w>w", "Switch to next Window")
 	nmap_leader("k", "<cmd>bdelete<CR>", "Close buffer")
 	nmap_leader("h", "<cmd>bprev<cr>", "Previous Buffer")
-	nmap_leader("l", "<cmd>bnext<cr>", "Next Buffer")
+	nmap_leader(";", "<cmd>bnext<cr>", "Next Buffer")
 	nmap_leader("w", "<cmd>w<CR>", "Save")
 	nmap_leader("q", "<cmd>wqall!<CR>", "Quit")
 
 	-- Filetree keymap
-	nmap_leader("w", "<cmd>NvimTreeToggle<cr>", "Toggle File Tree")
+	nmap_leader("o", "<cmd>NvimTreeToggle<cr>", "Toggle File Tree")
 
 	-- Package management keymap
 	nmap_leader("pu", "<cmd>DepsUpdate<cr>", "Update Deps")
 	nmap_leader("pc", "<cmd>DepsClean<cr>", "Clean Deps")
 
 	-- Git Keymap
-	nmap_leader("lg", "<cmd>LazyGit<CR>", "LazyGit")
 	nmap_leader("gc", "<Cmd>Git commit<CR>", "Commit")
 	nmap_leader("gC", "<Cmd>Git commit --amend<CR>", "Commit amend")
 	nmap_leader("gl", "<Cmd>Git log --oneline<CR>", "Log")
 	nmap_leader("gL", "<Cmd>Git log --oneline --follow -- %<CR>", "Log buffer")
 	nmap_leader("go", "<Cmd>lua MiniDiff.toggle_overlay()<CR>", "Toggle overlay")
 	nmap_leader("gs", "<Cmd>lua MiniGit.show_at_cursor()<CR>", "Show at cursor")
+	nmap_leader("lc", "<Cmd>GitConflictListQf<cr>", "List Conflicts")
 
 	-- LSP Keymaps
 	nmap_leader("la", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", "Arguments popup")
@@ -159,17 +157,25 @@ now(function()
 		"Mini.nvim directory"
 	)
 	nmap_leader("ep", '<Cmd>lua MiniFiles.open(vim.fn.stdpath("data").."/site/pack/deps/opt")<CR>', "Plugins directory")
-	nmap_leader("eq", "<Cmd>lua Config.toggle_quickfix()<CR>", "Quickfix")
 end)
 
 -- Colorscheme
 now(function()
-	add("sainnhe/everforest")
-	vim.cmd("colorscheme everforest")
+	add("maxmx03/fluoromachine.nvim")
+	local fm = require("fluoromachine")
+
+	fm.setup({
+		glow = false,
+		theme = "retrowave",
+	})
+
+	vim.cmd("colorscheme fluoromachine")
 	vim.cmd("hi PmenuMatch gui=bold")
 	vim.cmd("hi PmenuMatchSel gui=bold")
 	vim.cmd("hi! link @string.special.vimdoc Constant")
 	vim.cmd.hi("Comment gui=none")
+	vim.api.nvim_set_hl(0, "DiffText", { fg = "#ffffff", bg = "#1d3b40" })
+	vim.api.nvim_set_hl(0, "DiffAdd", { fg = "#ffffff", bg = "#1d3450" })
 end)
 
 -- Mini Deps ===============================================================
@@ -180,10 +186,6 @@ end)
 
 now(function()
 	require("mini.sessions").setup()
-end)
-
-now(function()
-	require("mini.starter").setup()
 end)
 
 now(function()
@@ -291,14 +293,17 @@ later(function()
 end)
 
 later(function()
+	vim.opt.iskeyword:append("-")
+
 	require("mini.completion").setup({
+		fallback_action = "<C-x><C-n>",
 		lsp_completion = {
-			source_func = "omnifunc",
-			auto_setup = false,
+			auto_setup = true,
 			process_items = function(items, base)
 				items = vim.tbl_filter(function(x)
 					return x.kind ~= 1 and x.kind ~= 15
 				end, items)
+
 				return MiniCompletion.default_process_items(items, base)
 			end,
 		},
@@ -311,6 +316,7 @@ later(function()
 	local keycode = vim.keycode or function(x)
 		return vim.api.nvim_replace_termcodes(x, true, true, true)
 	end
+
 	local keys = {
 		["cr"] = keycode("<CR>"),
 		["ctrl-y"] = keycode("<C-y>"),
@@ -329,9 +335,11 @@ end)
 
 later(function()
 	require("mini.diff").setup()
+
 	local rhs = function()
 		return MiniDiff.operator("yank") .. "gh"
 	end
+
 	vim.keymap.set("n", "ghy", rhs, { expr = true, remap = true, desc = "Copy hunk's reference lines" })
 end)
 
@@ -446,6 +454,7 @@ end)
 -- Git Conflicts
 later(function()
 	add({ source = "akinsho/git-conflict.nvim", version = "*", config = true })
+	require("git-conflict").setup()
 end)
 
 -- Package.json package info
@@ -481,13 +490,13 @@ now(function()
 			sorter = "case_sensitive",
 		},
 		view = {
-			width = "25%",
+			width = "20%",
 		},
 		renderer = {
 			group_empty = true,
 		},
 		filters = {
-			dotfiles = true,
+			dotfiles = false,
 		},
 		update_focused_file = {
 			enable = true,
@@ -532,21 +541,6 @@ later(function()
 	})
 end)
 
--- LazyGit
-later(function()
-	add({
-		source = "kdheepak/lazygit.nvim",
-		depends = { "nvim-lua/plenary.nvim" },
-		cmd = {
-			"LazyGit",
-			"LazyGitConfig",
-			"LazyGitCurrentFile",
-			"LazyGitFilter",
-			"LazyGitFilterCurrentFile",
-		},
-	})
-end)
-
 -- GitSigns
 later(function()
 	add("lewis6991/gitsigns.nvim")
@@ -564,11 +558,12 @@ end)
 -- LSP
 later(function()
 	add("neovim/nvim-lspconfig")
+	add("williamboman/mason.nvim")
+	add("williamboman/mason-lspconfig.nvim")
+
 	local lspconfig = require("lspconfig")
 
 	local on_attach_custom = function(client, buf_id)
-		vim.bo[buf_id].omnifunc = "v:lua.MiniCompletion.completefunc_lsp"
-
 		if vim.fn.has("nvim-0.8") == 1 then
 			client.server_capabilities.documentFormattingProvider = false
 			client.server_capabilities.documentRangeFormattingProvider = false
@@ -578,68 +573,24 @@ later(function()
 		end
 	end
 
-	local diagnostic_opts = {
-		float = { border = "double" },
-		signs = {
-			priority = 9999,
-			severity = { min = "WARN", max = "ERROR" },
-		},
-		virtual_text = { severity = { min = "ERROR", max = "ERROR" } },
-		update_in_insert = false,
-	}
+	require("mason").setup({})
+	require("mason-lspconfig").setup({
+		ensure_installed = { "tsserver", "angularls", "tailwindcss" },
+		automatic_installation = true,
+	})
 
-	vim.diagnostic.config(diagnostic_opts)
-
-	-- Lua (sumneko_lua) ==========================================================
-	local luals_root = vim.fn.stdpath("data") .. "/mason"
-	if vim.fn.isdirectory(luals_root) == 1 then
-		local sumneko_binary = luals_root .. "/bin/lua-language-server"
-
-		lspconfig.lua_ls.setup({
-			handlers = {
-				["textDocument/definition"] = function(err, result, ctx, config)
-					if type(result) == "table" then
-						result = { result[1] }
-					end
-					vim.lsp.handlers["textDocument/definition"](err, result, ctx, config)
-				end,
-			},
-			cmd = { sumneko_binary },
-			on_attach = function(client, bufnr)
-				on_attach_custom(client, bufnr)
-				client.server_capabilities.completionProvider.triggerCharacters = { ".", ":" }
-			end,
-			root_dir = function(fname)
-				return lspconfig.util.root_pattern(".git")(fname) or lspconfig.util.path.dirname(fname)
-			end,
-			settings = {
-				Lua = {
-					runtime = {
-						version = "LuaJIT",
-						path = vim.split(package.path, ";"),
-					},
-					diagnostics = {
-						globals = { "vim", "describe", "it", "before_each", "after_each", "MiniFiles", "MiniPick" },
-						disable = { "need-check-nil" },
-						workspaceDelay = -1,
-					},
-					workspace = {
-						ignoreSubmodules = true,
-					},
-					telemetry = {
-						enable = false,
+	require("mason-lspconfig").setup_handlers({
+		function(server)
+			lspconfig[server].setup({
+				on_attach = on_attach_custom,
+				settings = {
+					Lua = {
+						diagnostics = { globals = { "vim" } },
 					},
 				},
-			},
-		})
-	end
-
-	lspconfig.tsserver.setup({ on_attach = on_attach_custom })
-end)
-
-later(function()
-	add("williamboman/mason.nvim")
-	require("mason").setup()
+			})
+		end,
+	})
 end)
 
 -- Formatting
