@@ -6,8 +6,6 @@ if wezterm.config_builder then
 end
 
 config.check_for_updates = true
-
---- THEMING ---
 config.color_scheme = "carbonfox"
 config.font_size = 14
 config.window_padding = {
@@ -35,15 +33,10 @@ config.colors = {
 }
 
 config.tab_max_width = 100
-config.use_fancy_tab_bar = false
-
---- BEHAVIOUR ---
+config.use_fancy_tab_bar = true
 config.hide_mouse_cursor_when_typing = false
-
--- makes alt act as regular alt
 config.send_composed_key_when_left_alt_is_pressed = false
 config.send_composed_key_when_right_alt_is_pressed = false
-
 config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 
 config.window_frame = {
@@ -51,17 +44,12 @@ config.window_frame = {
 	border_right_width = "3px",
 	border_bottom_height = "3px",
 	border_top_height = "3px",
-	border_left_color = "gray",
-	border_right_color = "gray",
-	border_bottom_color = "gray",
-	border_top_color = "gray",
 }
 
 wezterm.on("update-right-status", function(window, pane)
 	local title = pane:get_title()
 	local date = " " .. wezterm.strftime("%H:%M %m-%d-%Y") .. " "
 
-	-- figure out a way to center it
 	window:set_right_status(wezterm.format({
 		{ Background = { Color = "#555555" } },
 		{ Text = " " .. title .. " " },
