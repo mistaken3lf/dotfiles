@@ -74,6 +74,7 @@ end)
 now(function()
 	local formatting_cmd = '<Cmd>lua require("conform").format({ lsp_fallback = true })<CR>'
 
+	-- Exit insert mode
 	vim.keymap.set("i", "jk", "<Esc>")
 
 	local imap_expr = function(lhs, rhs)
@@ -107,6 +108,7 @@ now(function()
 	nmap_leader("go", "<Cmd>lua MiniDiff.toggle_overlay()<CR>", "Toggle overlay")
 	nmap_leader("gs", "<Cmd>lua MiniGit.show_at_cursor()<CR>", "Show at cursor")
 	nmap_leader("lc", "<Cmd>GitConflictListQf<cr>", "List Conflicts")
+	nmap_leader("lg", "<cmd>LazyGit<cr>", "LazyGit")
 
 	-- LSP Keymaps
 	nmap_leader("la", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", "Arguments popup")
@@ -157,6 +159,18 @@ now(function()
 		"Mini.nvim directory"
 	)
 	nmap_leader("ep", '<Cmd>lua MiniFiles.open(vim.fn.stdpath("data").."/site/pack/deps/opt")<CR>', "Plugins directory")
+
+	-- Terminal
+	nmap_leader("tt", "<cmd>ToggleTerm direction=float<cr>", "Open floating terminal")
+	vim.keymap.set("t", "jk", [[<C-\><C-n>]])
+
+	-- MiniMap
+	nmap_leader("zc", "<Cmd>lua MiniMap.close()<CR>", "Close")
+	nmap_leader("zf", "<Cmd>lua MiniMap.toggle_focus()<CR>", "Focus (toggle)")
+	nmap_leader("zo", "<Cmd>lua MiniMap.open()<CR>", "Open")
+	nmap_leader("zr", "<Cmd>lua MiniMap.refresh()<CR>", "Refresh")
+	nmap_leader("zs", "<Cmd>lua MiniMap.toggle_side()<CR>", "Side (toggle)")
+	nmap_leader("zt", "<Cmd>lua MiniMap.toggle()<CR>", "Toggle")
 end)
 
 -- Colorscheme
@@ -266,6 +280,29 @@ now(function()
 end)
 
 later(function()
+	require("mini.fuzzy").setup()
+end)
+later(function()
+	require("mini.map").setup()
+
+	local map = require("mini.map")
+	local gen_integr = map.gen_integration
+	local encode_symbols = map.gen_encode_symbols.block("3x2")
+	-- Use dots in `st` terminal because it can render them as blocks
+	if vim.startswith(vim.fn.getenv("TERM"), "st") then
+		encode_symbols = map.gen_encode_symbols.dot("4x2")
+	end
+	map.setup({
+		symbols = { encode = encode_symbols },
+		integrations = { gen_integr.builtin_search(), gen_integr.diff(), gen_integr.diagnostic() },
+	})
+	vim.keymap.set("n", [[\h]], ":let v:hlsearch = 1 - v:hlsearch<CR>", { desc = "Toggle hlsearch" })
+	for _, key in ipairs({ "n", "N", "*" }) do
+		vim.keymap.set("n", key, key .. "zv<Cmd>lua MiniMap.refresh({}, { lines = false, scrollbar = false })<CR>")
+	end
+end)
+
+later(function()
 	local ai = require("mini.ai")
 	ai.setup({
 		custom_textobjects = {
@@ -331,6 +368,8 @@ later(function()
 			return keys["cr"]
 		end
 	end
+
+	vim.keymap.set("i", "<CR>", "v:lua.cr_action()", { expr = true })
 end)
 
 later(function()
@@ -418,28 +457,11 @@ end)
 
 later(function()
 	require("mini.pairs").setup({ modes = { insert = true, command = true, terminal = true } })
-	local keycode = vim.keycode or function(x)
-		return vim.api.nvim_replace_termcodes(x, true, true, true)
-	end
-	local keys = {
-		["cr"] = keycode("<CR>"),
-		["ctrl-y"] = keycode("<C-y>"),
-		["ctrl-y_cr"] = keycode("<C-y><CR>"),
-	}
-
-	_G.cr_action = function()
-		if vim.fn.pumvisible() ~= 0 then
-			local item_selected = vim.fn.complete_info()["selected"] ~= -1
-			return item_selected and keys["ctrl-y"] or keys["ctrl-y_cr"]
-		else
-			return keys["cr"]
-		end
-	end
-	vim.keymap.set("i", "<CR>", "v:lua.cr_action()", { expr = true })
 end)
 
 later(function()
 	require("mini.pick").setup({ window = { config = { border = "double" } } })
+
 	vim.ui.select = MiniPick.ui_select
 	vim.keymap.set("n", "/", [[<Cmd>Pick buf_lines scope='current'<CR>]], { nowait = true })
 end)
@@ -563,7 +585,7 @@ later(function()
 
 	local lspconfig = require("lspconfig")
 
-	local on_attach_custom = function(client, buf_id)
+	local on_attach_custom = function(client)
 		if vim.fn.has("nvim-0.8") == 1 then
 			client.server_capabilities.documentFormattingProvider = false
 			client.server_capabilities.documentRangeFormattingProvider = false
@@ -581,6 +603,10 @@ later(function()
 
 	require("mason-lspconfig").setup_handlers({
 		function(server)
+			if server_name == "tsserver" then
+				server_name = "ts_ls"
+			end
+
 			lspconfig[server].setup({
 				on_attach = on_attach_custom,
 				settings = {
@@ -618,6 +644,28 @@ later(function()
 			markdown = { "prettierd", "prettier", stop_after_first = true },
 			graphql = { "prettierd", "prettier", stop_after_first = true },
 			htmlangular = { "prettierd", "prettier", stop_after_first = true },
+			rust = { "rustfmt", lsp_format = "fallback" },
 		},
+	})
+end)
+
+-- Toggle Term
+later(function()
+	add({ source = "akinsho/toggleterm.nvim", version = "*", config = true })
+	require("toggleterm").setup()
+end)
+
+-- LazyGit
+later(function()
+	add({
+		source = "kdheepak/lazygit.nvim",
+		cmd = {
+			"LazyGit",
+			"LazyGitConfig",
+			"LazyGitCurrentFile",
+			"LazyGitFilter",
+			"LazyGitFilterCurrentFile",
+		},
+		depends = { "nvim-lua/plenary.nvim" },
 	})
 end)
