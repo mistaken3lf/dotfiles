@@ -645,6 +645,10 @@ later(function()
 			graphql = { "prettierd", "prettier", stop_after_first = true },
 			htmlangular = { "prettierd", "prettier", stop_after_first = true },
 			rust = { "rustfmt", lsp_format = "fallback" },
+			elixir = { "mix" },
+			eelixir = { "mix" },
+			heex = { "mix" },
+			surface = { "mix" },
 		},
 	})
 end)
