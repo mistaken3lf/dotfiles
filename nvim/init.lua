@@ -1,5 +1,18 @@
-local path_package = vim.fn.stdpath("data") .. "/site/"
-local mini_path = path_package .. "pack/deps/start/mini.nvim"
+-- Application Config
+local H = {}
+
+H.keys = {
+	["cr"] = vim.api.nvim_replace_termcodes("<CR>", true, true, true),
+	["ctrl-y"] = vim.api.nvim_replace_termcodes("<C-y>", true, true, true),
+	["ctrl-y_cr"] = vim.api.nvim_replace_termcodes("<C-y><CR>", true, true, true),
+}
+
+_G.Config = {
+	path_package = vim.fn.stdpath("data") .. "/site/",
+}
+
+-- Setup Mini
+local mini_path = Config.path_package .. "pack/deps/start/mini.nvim"
 
 if not vim.loop.fs_stat(mini_path) then
 	vim.cmd('echo "Installing `mini.nvim`" | redraw')
@@ -9,9 +22,19 @@ if not vim.loop.fs_stat(mini_path) then
 	vim.cmd('echo "Installed `mini.nvim`" | redraw')
 end
 
-require("mini.deps").setup({ path = { package = path_package } })
+require("mini.deps").setup({ path = { package = Config.path_package } })
 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+
+-- Functions
+Config.cr_action = function()
+	if vim.fn.pumvisible() ~= 0 then
+		local item_selected = vim.fn.complete_info()["selected"] ~= -1
+		return item_selected and H.keys["ctrl-y"] or H.keys["ctrl-y_cr"]
+	else
+		return require("mini.pairs").cr()
+	end
+end
 
 -- Map leader keys
 local nmap_leader = function(suffix, rhs, desc, opts)
@@ -282,21 +305,25 @@ end)
 later(function()
 	require("mini.fuzzy").setup()
 end)
+
 later(function()
 	require("mini.map").setup()
 
 	local map = require("mini.map")
 	local gen_integr = map.gen_integration
 	local encode_symbols = map.gen_encode_symbols.block("3x2")
-	-- Use dots in `st` terminal because it can render them as blocks
+
 	if vim.startswith(vim.fn.getenv("TERM"), "st") then
 		encode_symbols = map.gen_encode_symbols.dot("4x2")
 	end
+
 	map.setup({
 		symbols = { encode = encode_symbols },
 		integrations = { gen_integr.builtin_search(), gen_integr.diff(), gen_integr.diagnostic() },
 	})
+
 	vim.keymap.set("n", [[\h]], ":let v:hlsearch = 1 - v:hlsearch<CR>", { desc = "Toggle hlsearch" })
+
 	for _, key in ipairs({ "n", "N", "*" }) do
 		vim.keymap.set("n", key, key .. "zv<Cmd>lua MiniMap.refresh({}, { lines = false, scrollbar = false })<CR>")
 	end
@@ -334,7 +361,9 @@ later(function()
 
 	require("mini.completion").setup({
 		fallback_action = "<C-x><C-n>",
+		set_vim_setting = true,
 		lsp_completion = {
+			source_func = "omnifunc",
 			auto_setup = true,
 			process_items = function(items, base)
 				items = vim.tbl_filter(function(x)
@@ -349,27 +378,6 @@ later(function()
 			signature = { border = "double" },
 		},
 	})
-
-	local keycode = vim.keycode or function(x)
-		return vim.api.nvim_replace_termcodes(x, true, true, true)
-	end
-
-	local keys = {
-		["cr"] = keycode("<CR>"),
-		["ctrl-y"] = keycode("<C-y>"),
-		["ctrl-y_cr"] = keycode("<C-y><CR>"),
-	}
-
-	_G.cr_action = function()
-		if vim.fn.pumvisible() ~= 0 then
-			local item_selected = vim.fn.complete_info()["selected"] ~= -1
-			return item_selected and keys["ctrl-y"] or keys["ctrl-y_cr"]
-		else
-			return keys["cr"]
-		end
-	end
-
-	vim.keymap.set("i", "<CR>", "v:lua.cr_action()", { expr = true })
 end)
 
 later(function()
@@ -457,6 +465,7 @@ end)
 
 later(function()
 	require("mini.pairs").setup({ modes = { insert = true, command = true, terminal = true } })
+	vim.keymap.set("i", "<CR>", "v:lua.Config.cr_action()", { expr = true })
 end)
 
 later(function()
@@ -585,7 +594,9 @@ later(function()
 
 	local lspconfig = require("lspconfig")
 
-	local on_attach_custom = function(client)
+	local on_attach_custom = function(client, buf_id)
+		vim.bo[buf_id].omnifunc = "v:lua.MiniCompletion.completefunc_lsp"
+
 		if vim.fn.has("nvim-0.8") == 1 then
 			client.server_capabilities.documentFormattingProvider = false
 			client.server_capabilities.documentRangeFormattingProvider = false
@@ -597,16 +608,12 @@ later(function()
 
 	require("mason").setup({})
 	require("mason-lspconfig").setup({
-		ensure_installed = { "tsserver", "angularls", "tailwindcss" },
+		ensure_installed = { "ts_ls", "angularls", "tailwindcss" },
 		automatic_installation = true,
 	})
 
 	require("mason-lspconfig").setup_handlers({
 		function(server)
-			if server_name == "tsserver" then
-				server_name = "ts_ls"
-			end
-
 			lspconfig[server].setup({
 				on_attach = on_attach_custom,
 				settings = {
